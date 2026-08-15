@@ -118,7 +118,7 @@ export default function RegisterHotelPage() {
               <span>Option 2: Partner Onboarding Wizard</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-950 font-heading">
-              Register Your Property
+              Register Your Hotel Property
             </h1>
             <p className="text-xs text-slate-500">
               Submit your hospitality listing for administrative verification and instant dashboard activation.
@@ -126,9 +126,9 @@ export default function RegisterHotelPage() {
           </div>
 
           <Link href="/login">
-            <Button variant="outline" size="sm" className="border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold">
+            <button className="px-4 py-2 rounded-full text-xs font-bold bg-white hover:bg-slate-100 text-slate-900 border-2 border-slate-300 shadow-2xs transition-all">
               Already Registered? Sign In
-            </Button>
+            </button>
           </Link>
         </div>
 
@@ -149,9 +149,9 @@ export default function RegisterHotelPage() {
                     key={s.step}
                     className={`p-3 rounded-2xl border transition-all ${
                       isActive
-                        ? "bg-white border-red-500 shadow-md text-slate-900"
+                        ? "bg-white border-2 border-red-600 shadow-md text-slate-950"
                         : isDone
-                        ? "bg-emerald-50 border-emerald-300 text-emerald-700"
+                        ? "bg-emerald-50 border-emerald-300 text-emerald-800"
                         : "bg-slate-100 border-slate-200 text-slate-400"
                     }`}
                   >
@@ -171,7 +171,7 @@ export default function RegisterHotelPage() {
             {/* Form Panel */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 border border-slate-200 shadow-xl shadow-slate-200/50">
               {errorMessage && (
-                <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-rose-700 text-xs font-medium">
+                <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-rose-700 text-xs font-medium">
                   <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
                   <span>{errorMessage}</span>
                 </div>
@@ -181,7 +181,7 @@ export default function RegisterHotelPage() {
                 {/* STEP 1: Property Overview */}
                 {currentStep === 1 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h3 className="text-sm font-bold text-slate-900 font-heading border-b border-slate-100 pb-2">
+                    <h3 className="text-sm font-bold text-slate-950 font-heading border-b border-slate-100 pb-2">
                       1. Property & Business Overview
                     </h3>
 
@@ -233,7 +233,7 @@ export default function RegisterHotelPage() {
                 {/* STEP 2: Location & Contact */}
                 {currentStep === 2 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h3 className="text-sm font-bold text-slate-900 font-heading border-b border-slate-100 pb-2">
+                    <h3 className="text-sm font-bold text-slate-950 font-heading border-b border-slate-100 pb-2">
                       2. Location & Contact Details
                     </h3>
 
@@ -291,7 +291,7 @@ export default function RegisterHotelPage() {
                 {/* STEP 3: Verification Documents & Media */}
                 {currentStep === 3 && (
                   <div className="space-y-5 animate-in fade-in duration-200">
-                    <h3 className="text-sm font-bold text-slate-900 font-heading border-b border-slate-100 pb-2">
+                    <h3 className="text-sm font-bold text-slate-950 font-heading border-b border-slate-100 pb-2">
                       3. Identity Verification & Visual Media (Auto WebP Compressed)
                     </h3>
 
@@ -326,7 +326,7 @@ export default function RegisterHotelPage() {
                     </div>
 
                     <div className="space-y-2 pt-1">
-                      <label className="block text-xs font-bold text-slate-900">Featured Amenities</label>
+                      <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">Featured Amenities</label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                         {siteConfig.amenitiesList.slice(0, 9).map((amenity) => {
                           const isSelected = formData.amenities.includes(amenity);
@@ -335,7 +335,7 @@ export default function RegisterHotelPage() {
                               type="button"
                               key={amenity}
                               onClick={() => toggleAmenity(amenity)}
-                              className={`p-2 rounded-lg border text-xs font-medium text-left flex items-center gap-1.5 transition ${
+                              className={`p-2.5 rounded-xl border text-xs font-medium text-left flex items-center gap-1.5 transition ${
                                 isSelected
                                   ? "bg-red-50 border-red-500 text-red-700 font-semibold"
                                   : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
@@ -351,39 +351,39 @@ export default function RegisterHotelPage() {
                   </div>
                 )}
 
-                {/* Stepper Buttons */}
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                {/* Highly-Visible Stepper Action Buttons */}
+                <div className="pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
                   {currentStep > 1 ? (
-                    <Button type="button" variant="outline" size="sm" onClick={handlePrev} className="gap-1.5 border-slate-200">
-                      <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Previous</span>
-                    </Button>
+                    <button
+                      type="button"
+                      onClick={handlePrev}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-bold bg-white hover:bg-slate-100 text-slate-800 border-2 border-slate-300 shadow-2xs transition"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      <span>Previous Step</span>
+                    </button>
                   ) : (
                     <div />
                   )}
 
                   {currentStep < 3 ? (
-                    <Button
+                    <button
                       type="button"
-                      variant="primary"
-                      size="md"
                       onClick={handleNext}
-                      className="gap-1.5 bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white font-bold"
+                      className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-xs font-bold bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white shadow-lg shadow-red-500/25 transition active:scale-95"
                     >
-                      <span>Continue</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
+                      <span>Continue to Step {currentStep + 1}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   ) : (
-                    <Button
+                    <button
                       type="submit"
-                      variant="primary"
-                      size="md"
-                      isLoading={isSubmitting}
-                      className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md shadow-emerald-500/20"
+                      disabled={isSubmitting}
+                      className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:opacity-95 text-white shadow-lg shadow-emerald-500/30 transition active:scale-95"
                     >
                       <CheckCircle2 className="w-4 h-4" />
-                      <span>Submit Application</span>
-                    </Button>
+                      <span>{isSubmitting ? "Submitting Application..." : "Submit Registration Request"}</span>
+                    </button>
                   )}
                 </div>
               </form>
