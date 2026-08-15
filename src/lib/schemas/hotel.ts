@@ -38,7 +38,7 @@ export const hotelRegistrationSchema = z.object({
   logoUrl: safeUrlSchema,
   coverImageUrl: safeUrlSchema,
   amenities: z.array(z.string().max(50)).default([]),
-  ownerPassword: z.string().min(8, "Password must be at least 8 characters").max(100).optional(),
+  ownerPassword: z.string().min(8, "Password must be at least 8 characters").max(100),
 });
 
 export type HotelRegistrationInput = z.infer<typeof hotelRegistrationSchema>;

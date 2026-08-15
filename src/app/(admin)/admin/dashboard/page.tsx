@@ -60,38 +60,38 @@ export default function AdminDashboardPage() {
   const maxRevenue = Math.max(...data.monthlyRevenue.map((m) => m.revenue), 1000);
 
   return (
-    <div className="space-y-8 text-slate-900">
+    <div className="space-y-8 text-slate-100">
       {/* 1. Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold mb-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold mb-1">
             <Activity className="w-3.5 h-3.5" />
             <span>Master Control Plane</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">
-            Platform Operations & Governance
+          <h1 className="text-2xl sm:text-3xl font-bold text-white font-heading">
+            Platform Operations &amp; Governance
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Live multi-tenant telemetry, verification queues, GMV volume, and hygiene fleet dispatches.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link href="/admin/hotels">
-            <Button variant="outline" size="sm" className="gap-1.5 border-slate-200 text-slate-700">
-              <Clock className="w-4 h-4 text-amber-600" />
-              <span>Review Queues ({data.pendingHotels})</span>
+            <Button variant="outline" size="sm" className="gap-1.5 border-slate-700 text-slate-300 bg-white/5 hover:bg-white/10">
+              <Clock className="w-4 h-4 text-amber-400" />
+              <span>Review Queue ({data.pendingHotels})</span>
             </Button>
           </Link>
           <Link href="/admin/hotels/create">
-            <Button
-              variant="primary"
-              size="sm"
-              className="gap-1.5 bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold shadow-md shadow-red-500/20"
+            <button
+              type="button"
+              style={{ background: "linear-gradient(135deg, #FF3B30, #FF9500)" }}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-white font-bold text-xs shadow-md shadow-red-500/20 hover:opacity-90 active:scale-95 transition"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>Add Hotel (Option 1)</span>
-            </Button>
+              <span>Add Hotel</span>
+            </button>
           </Link>
         </div>
       </div>
@@ -303,8 +303,8 @@ export default function AdminDashboardPage() {
             <p className="text-xs text-slate-500 mt-0.5">Properties on the platform</p>
           </div>
           <Link href="/admin/hotels">
-            <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 gap-1">
-              <span>View All 4 Queues</span>
+            <Button variant="ghost" size="sm" className="text-red-400 hover:text-red-300 gap-1">
+              <span>View All Queues</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Link>

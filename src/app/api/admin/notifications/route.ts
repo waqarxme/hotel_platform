@@ -1,9 +1,12 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
-import { verifyAuth, errorResponse, successResponse } from "@/lib/auth/rbac";
+import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { createNotificationSchema } from "@/lib/schemas/review";
 
 export async function POST(req: NextRequest) {
+  const secError = guardSecurity(req, "admin-notifications");
+  if (secError) return secError;
+
   try {
     const { auth, errorResponse: authError } = await verifyAuth(["admin"]);
     if (authError || !auth) return authError!;

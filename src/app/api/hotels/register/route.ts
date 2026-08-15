@@ -2,9 +2,13 @@ import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { hotelRegistrationSchema } from "@/lib/schemas/hotel";
 import { createSessionCookieValue, getCurrentUser, SESSION_COOKIE_OPTIONS } from "@/lib/auth/session";
-import { errorResponse, successResponse } from "@/lib/auth/rbac";
+import { errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
+import { hashPassword } from "@/lib/auth/password";
 
 export async function POST(req: NextRequest) {
+  const secError = guardSecurity(req, "hotel-register", { capacity: 5, refillRatePerSec: 0.1 });
+  if (secError) return secError;
+
   try {
     const body = await req.json();
     const result = hotelRegistrationSchema.safeParse(body);
@@ -14,25 +18,31 @@ export async function POST(req: NextRequest) {
     }
 
     const data = result.data;
-    let currentUser = await getCurrentUser();
+    const currentUser = await getCurrentUser();
 
-    // If user is not logged in, create or find the owner account
-    if (!currentUser) {
+    // If user is not logged in, create the owner account. If an account with
+    // this email already exists, require login instead of silently adopting it.
+    let owner = currentUser;
+    if (!owner) {
       const existingUser = db.findUserByEmail(data.email);
       if (existingUser) {
-        currentUser = existingUser;
-      } else {
-        currentUser = db.createUser({
-          name: data.businessName,
-          email: data.email,
-          phone: data.phone,
-          role: "hotel_owner",
-        });
+        return errorResponse(
+          "LOGIN_REQUIRED",
+          "An account with this email already exists. Please sign in before registering a hotel.",
+          401
+        );
       }
+      owner = db.createUser({
+        name: data.businessName,
+        email: data.email,
+        phone: data.phone,
+        role: "hotel_owner",
+        passwordHash: hashPassword(data.ownerPassword),
+      });
     }
 
     // Check if owner already has a pending or active hotel
-    const existingHotel = db.findHotelByOwnerId(currentUser.id);
+    const existingHotel = db.findHotelByOwnerId(owner.id);
     if (existingHotel && existingHotel.status !== "rejected") {
       return errorResponse(
         "ALREADY_EXISTS",
@@ -43,7 +53,7 @@ export async function POST(req: NextRequest) {
 
     // Create the hotel in pending_approval status
     const newHotel = db.createHotel({
-      ownerId: currentUser.id,
+      ownerId: owner.id,
       name: data.hotelName,
       businessName: data.businessName,
       email: data.email,
@@ -64,10 +74,10 @@ export async function POST(req: NextRequest) {
       status: "pending_approval",
     });
 
-    const cookieValue = createSessionCookieValue(currentUser);
+    const cookieValue = createSessionCookieValue(owner);
     const response = successResponse({
       hotel: newHotel,
-      user: currentUser,
+      user: owner,
       message: "Hotel registration request submitted successfully. It is now awaiting admin review.",
     }, 201);
 

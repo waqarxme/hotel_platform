@@ -94,7 +94,11 @@ export function guardSecurity(
 
   // 2. CSRF Check for mutating operations
   if (!validateCsrf(req)) {
-    // Note: In local dev/demo mode, if csrf header is not yet sent by client, allow standard authenticated requests
+    return errorResponse(
+      "CSRF_TOKEN_INVALID",
+      "Invalid or missing CSRF token",
+      403
+    );
   }
 
   return null;

@@ -40,6 +40,7 @@ export default function RegisterHotelPage() {
     city: "",
     country: "Pakistan",
     googleMapsUrl: "",
+    ownerPassword: "",
 
     // Step 3
     businessLicenseUrl: "",
@@ -72,6 +73,10 @@ export default function RegisterHotelPage() {
     if (currentStep === 2) {
       if (!formData.email || !formData.phone || !formData.address || !formData.city) {
         setErrorMessage("Please complete all contact and location address fields.");
+        return;
+      }
+      if (formData.ownerPassword.length < 8) {
+        setErrorMessage("Please create an account password of at least 8 characters.");
         return;
       }
     }
@@ -284,6 +289,16 @@ export default function RegisterHotelPage() {
                       placeholder="https://maps.google.com/?q=..."
                       value={formData.googleMapsUrl}
                       onChange={(e) => setFormData({ ...formData, googleMapsUrl: e.target.value })}
+                    />
+
+                    <Input
+                      label="Account Password *"
+                      type="password"
+                      placeholder="Minimum 8 characters — used to sign in to your owner dashboard"
+                      value={formData.ownerPassword}
+                      onChange={(e) => setFormData({ ...formData, ownerPassword: e.target.value })}
+                      helperText="You will use this password to access your hotel management dashboard."
+                      required
                     />
                   </div>
                 )}

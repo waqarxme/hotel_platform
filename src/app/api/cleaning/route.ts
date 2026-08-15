@@ -1,9 +1,12 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
-import { verifyAuth, errorResponse, successResponse } from "@/lib/auth/rbac";
+import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { createCleaningRequestSchema } from "@/lib/schemas/cleaning";
 
 export async function GET(req: NextRequest) {
+  const secError = guardSecurity(req, "cleaning-read");
+  if (secError) return secError;
+
   try {
     const { auth, errorResponse: authError } = await verifyAuth(["hotel_owner", "admin"]);
     if (authError || !auth) return authError!;
@@ -37,6 +40,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const secError = guardSecurity(req, "cleaning-write");
+  if (secError) return secError;
+
   try {
     const { auth, errorResponse: authError } = await verifyAuth(["hotel_owner", "admin"]);
     if (authError || !auth) return authError!;

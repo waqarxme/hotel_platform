@@ -2,7 +2,7 @@ import React from "react";
 import { getCurrentUser } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/shared/admin-sidebar";
-import { Navbar } from "@/components/shared/navbar";
+import { AdminTopbar } from "@/components/shared/admin-topbar";
 
 export default async function AdminLayout({
   children,
@@ -16,12 +16,12 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-      <Navbar />
-      <div className="flex-1 flex">
+    <div className="min-h-screen flex flex-col bg-[#0D111C]">
+      <AdminTopbar />
+      <div className="flex flex-1 overflow-hidden">
         <AdminSidebar />
-        <main className="flex-1 p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
-          {children}
+        <main className="flex-1 overflow-y-auto p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">{children}</div>
         </main>
       </div>
     </div>

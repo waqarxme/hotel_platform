@@ -8,27 +8,74 @@ export function generateCsrfToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
+/**
+ * Checks that the request either carries a valid double-submit CSRF token
+ * (cookie value echoed in the X-CSRF-Token header) or originates from the
+ * application's own origin (Origin / Referer header check).
+ */
 export function validateCsrf(req: NextRequest): boolean {
   // Safe methods do not require CSRF checks
   if (["GET", "HEAD", "OPTIONS"].includes(req.method)) {
     return true;
   }
 
+  // Double-submit token check (defense in depth, used by the client wrapper)
   const cookieToken = req.cookies.get(CSRF_COOKIE_NAME)?.value;
   const headerToken = req.headers.get(CSRF_HEADER_NAME);
 
-  if (!cookieToken || !headerToken) {
-    return false;
+  if (cookieToken && headerToken) {
+    try {
+      if (
+        crypto.timingSafeEqual(
+          Buffer.from(cookieToken),
+          Buffer.from(headerToken)
+        )
+      ) {
+        return true;
+      }
+    } catch {
+      // Fall through to origin check
+    }
   }
 
+  return isSameOriginRequest(req);
+}
+
+function isSameOriginRequest(req: NextRequest): boolean {
+  const rawAppUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  let appUrl: URL;
   try {
-    return crypto.timingSafeEqual(
-      Buffer.from(cookieToken),
-      Buffer.from(headerToken)
-    );
+    appUrl = new URL(rawAppUrl);
   } catch {
     return false;
   }
+
+  const origin = req.headers.get("origin");
+  if (origin) {
+    try {
+      const o = new URL(origin);
+      if (o.host !== appUrl.host) return false;
+      if (appUrl.protocol === "https:" && o.protocol !== "https:") return false;
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  const referer = req.headers.get("referer");
+  if (referer) {
+    try {
+      const r = new URL(referer);
+      return r.host === appUrl.host;
+    } catch {
+      return false;
+    }
+  }
+
+  // No Origin/Referer present: non-browser client or a browser edge case.
+  // Without a valid token we still reject to stay conservative for
+  // cross-origin form submissions from old browsers.
+  return false;
 }
 
 export function attachCsrfCookie(res: NextResponse, token: string): void {

@@ -28,6 +28,7 @@ export interface User {
   phone?: string;
   avatarUrl?: string;
   hotelId?: string;
+  passwordHash?: string;
   createdAt: string;
 }
 

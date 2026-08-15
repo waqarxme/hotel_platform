@@ -1,12 +1,15 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
-import { verifyAuth, errorResponse, successResponse } from "@/lib/auth/rbac";
+import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { rejectHotelSchema } from "@/lib/schemas/hotel";
 
 export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const secError = guardSecurity(req, "admin-hotels-write");
+  if (secError) return secError;
+
   try {
     const { auth, errorResponse: authError } = await verifyAuth(["admin"]);
     if (authError || !auth) return authError!;

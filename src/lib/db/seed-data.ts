@@ -8,6 +8,7 @@ import {
   Review,
   Notification,
 } from "@/types";
+import { hashPassword } from "@/lib/auth/password";
 
 // TWO DEFAULT USERS (ONE OF EACH ROLE)
 export const initialUsers: User[] = [
@@ -15,6 +16,7 @@ export const initialUsers: User[] = [
     id: "usr-admin-1",
     name: "Master Administrator",
     email: "admin@hotelplatform.com",
+    passwordHash: hashPassword("password123"),
     role: "admin",
     phone: "+92 300 1234567",
     avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
@@ -24,6 +26,7 @@ export const initialUsers: User[] = [
     id: "usr-owner-1",
     name: "Tariq Mahmood",
     email: "owner@serenapalace.com",
+    passwordHash: hashPassword("password123"),
     role: "hotel_owner",
     phone: "+92 321 9876543",
     hotelId: "htl-serena-1",
