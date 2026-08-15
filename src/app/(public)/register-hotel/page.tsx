@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   AlertCircle,
   ShieldCheck,
-  Hotel as HotelIcon,
 } from "lucide-react";
 
 export default function RegisterHotelPage() {
@@ -109,25 +108,25 @@ export default function RegisterHotelPage() {
   };
 
   return (
-    <div className="min-h-screen bg-lava-950 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 text-slate-900">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-lava-800 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lava-500/15 border border-lava-500/30 text-lava-400 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Option 2: Public Registration Wizard</span>
+              <span>Option 2: Partner Onboarding Wizard</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white font-heading">
-              Partner Property Onboarding
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-950 font-heading">
+              Register Your Property
             </h1>
-            <p className="text-xs text-titanium-400">
+            <p className="text-xs text-slate-500">
               Submit your hospitality listing for administrative verification and instant dashboard activation.
             </p>
           </div>
 
           <Link href="/login">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold">
               Already Registered? Sign In
             </Button>
           </Link>
@@ -150,16 +149,16 @@ export default function RegisterHotelPage() {
                     key={s.step}
                     className={`p-3 rounded-2xl border transition-all ${
                       isActive
-                        ? "bg-lava-900 border-lava-500 shadow-lg shadow-lava-500/20"
+                        ? "bg-white border-red-500 shadow-md text-slate-900"
                         : isDone
-                        ? "bg-lava-950 border-emerald-500/40 text-emerald-400"
-                        : "bg-lava-950/60 border-lava-800 text-titanium-500"
+                        ? "bg-emerald-50 border-emerald-300 text-emerald-700"
+                        : "bg-slate-100 border-slate-200 text-slate-400"
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <s.icon
                         className={`w-4 h-4 ${
-                          isActive ? "text-lava-400" : isDone ? "text-emerald-400" : "text-titanium-500"
+                          isActive ? "text-red-600" : isDone ? "text-emerald-600" : "text-slate-400"
                         }`}
                       />
                       <span className="text-xs font-bold">{s.title}</span>
@@ -170,10 +169,10 @@ export default function RegisterHotelPage() {
             </div>
 
             {/* Form Panel */}
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 border border-slate-200 shadow-xl shadow-slate-200/50">
               {errorMessage && (
-                <div className="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/40 flex items-center gap-2.5 text-rose-300 text-xs">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
+                <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-rose-700 text-xs font-medium">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
                   <span>{errorMessage}</span>
                 </div>
               )}
@@ -182,7 +181,7 @@ export default function RegisterHotelPage() {
                 {/* STEP 1: Property Overview */}
                 {currentStep === 1 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h3 className="text-sm font-bold text-white font-heading border-b border-lava-800 pb-2">
+                    <h3 className="text-sm font-bold text-slate-900 font-heading border-b border-slate-100 pb-2">
                       1. Property & Business Overview
                     </h3>
 
@@ -234,7 +233,7 @@ export default function RegisterHotelPage() {
                 {/* STEP 2: Location & Contact */}
                 {currentStep === 2 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h3 className="text-sm font-bold text-white font-heading border-b border-lava-800 pb-2">
+                    <h3 className="text-sm font-bold text-slate-900 font-heading border-b border-slate-100 pb-2">
                       2. Location & Contact Details
                     </h3>
 
@@ -292,7 +291,7 @@ export default function RegisterHotelPage() {
                 {/* STEP 3: Verification Documents & Media */}
                 {currentStep === 3 && (
                   <div className="space-y-5 animate-in fade-in duration-200">
-                    <h3 className="text-sm font-bold text-white font-heading border-b border-lava-800 pb-2">
+                    <h3 className="text-sm font-bold text-slate-900 font-heading border-b border-slate-100 pb-2">
                       3. Identity Verification & Visual Media (Auto WebP Compressed)
                     </h3>
 
@@ -327,7 +326,7 @@ export default function RegisterHotelPage() {
                     </div>
 
                     <div className="space-y-2 pt-1">
-                      <label className="block text-xs font-semibold text-titanium-200">Featured Amenities</label>
+                      <label className="block text-xs font-bold text-slate-900">Featured Amenities</label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                         {siteConfig.amenitiesList.slice(0, 9).map((amenity) => {
                           const isSelected = formData.amenities.includes(amenity);
@@ -338,11 +337,11 @@ export default function RegisterHotelPage() {
                               onClick={() => toggleAmenity(amenity)}
                               className={`p-2 rounded-lg border text-xs font-medium text-left flex items-center gap-1.5 transition ${
                                 isSelected
-                                  ? "bg-lava-500/20 border-lava-500 text-white font-semibold"
-                                  : "bg-lava-950 border-lava-800 text-titanium-400"
+                                  ? "bg-red-50 border-red-500 text-red-700 font-semibold"
+                                  : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
                               }`}
                             >
-                              <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? "text-lava-400" : "text-titanium-500"}`} />
+                              <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? "text-red-600" : "text-slate-400"}`} />
                               <span className="truncate">{amenity}</span>
                             </button>
                           );
@@ -353,9 +352,9 @@ export default function RegisterHotelPage() {
                 )}
 
                 {/* Stepper Buttons */}
-                <div className="pt-6 border-t border-lava-800 flex items-center justify-between">
+                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
                   {currentStep > 1 ? (
-                    <Button type="button" variant="outline" size="sm" onClick={handlePrev} className="gap-1.5">
+                    <Button type="button" variant="outline" size="sm" onClick={handlePrev} className="gap-1.5 border-slate-200">
                       <ArrowLeft className="w-3.5 h-3.5" />
                       <span>Previous</span>
                     </Button>
@@ -364,12 +363,24 @@ export default function RegisterHotelPage() {
                   )}
 
                   {currentStep < 3 ? (
-                    <Button type="button" variant="primary" size="md" onClick={handleNext} className="gap-1.5">
+                    <Button
+                      type="button"
+                      variant="primary"
+                      size="md"
+                      onClick={handleNext}
+                      className="gap-1.5 bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white font-bold"
+                    >
                       <span>Continue</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Button>
                   ) : (
-                    <Button type="submit" variant="primary" size="md" isLoading={isSubmitting} className="gap-2 bg-emerald-600 hover:bg-emerald-700">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="md"
+                      isLoading={isSubmitting}
+                      className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md shadow-emerald-500/20"
+                    >
                       <CheckCircle2 className="w-4 h-4" />
                       <span>Submit Application</span>
                     </Button>
@@ -382,60 +393,60 @@ export default function RegisterHotelPage() {
           {/* RIGHT 5 COLS: REAL-TIME PROPERTY PREVIEW MOCKUP */}
           <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-24">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-titanium-300 uppercase tracking-wider">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                 Live Public Card Preview
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-lava-500/20 text-lava-400 font-mono font-bold">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-mono font-bold">
                 Real-Time
               </span>
             </div>
 
-            <div className="glass-card rounded-3xl overflow-hidden border border-lava-700/80 shadow-2xl space-y-4">
-              <div className="relative h-56 w-full bg-lava-950 overflow-hidden">
+            <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xl space-y-4">
+              <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={formData.coverImageUrl || "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200"}
                   alt="Preview"
-                  className="w-full h-full object-cover brightness-[0.9]"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute top-3 left-3 flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-lava-500 text-white shadow-md">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-900 text-white shadow-md">
                     {formData.category}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white shadow-md flex items-center gap-1">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-md flex items-center gap-1">
                     <ShieldCheck className="w-3 h-3" /> Verified Partner
                   </span>
                 </div>
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white font-semibold">
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white font-semibold drop-shadow-md">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-lava-400" />
+                    <MapPin className="w-3.5 h-3.5 text-red-400" />
                     {formData.city || "City Name"}, {formData.country}
                   </span>
                 </div>
               </div>
 
               <div className="p-5 pt-0 space-y-3">
-                <h3 className="text-lg font-bold text-white font-heading truncate">
+                <h3 className="text-lg font-bold text-slate-950 font-heading truncate">
                   {formData.hotelName || "Your Hotel Name"}
                 </h3>
-                <p className="text-xs text-titanium-300 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                   {formData.description || "Your property narrative description will appear here on the public explorer."}
                 </p>
 
                 <div className="flex flex-wrap gap-1 pt-1">
                   {formData.amenities.slice(0, 3).map((a) => (
-                    <span key={a} className="px-2 py-0.5 rounded bg-lava-950 border border-lava-800 text-[10px] text-titanium-300">
+                    <span key={a} className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] text-slate-700 font-medium">
                       {a}
                     </span>
                   ))}
                 </div>
 
-                <div className="pt-3 border-t border-lava-800 flex items-center justify-between text-xs">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-[10px] text-titanium-400 uppercase font-bold">Capacity</span>
-                    <p className="text-sm font-bold text-white font-heading">{formData.totalRooms} Rooms</p>
+                    <span className="text-[10px] text-slate-400 uppercase font-bold">Capacity</span>
+                    <p className="text-sm font-bold text-slate-900 font-heading">{formData.totalRooms} Rooms</p>
                   </div>
-                  <span className="text-xs font-bold text-lava-400">Ready for Bookings</span>
+                  <span className="text-xs font-bold text-red-600">Ready for Bookings</span>
                 </div>
               </div>
             </div>

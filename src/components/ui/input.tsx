@@ -14,7 +14,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label htmlFor={inputId} className="block text-xs font-semibold text-titanium-200 uppercase tracking-wider">
+          <label htmlFor={inputId} className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
             {label}
           </label>
         )}
@@ -23,14 +23,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           type={type}
           ref={ref}
           className={cn(
-            "w-full rounded-xl bg-lava-950/90 border border-lava-800 px-4 py-3 text-sm text-white placeholder-titanium-500 transition duration-150 focus:border-lava-500 focus:outline-none focus:ring-1 focus:ring-lava-500 disabled:opacity-50",
-            error && "border-rose-500 focus:border-rose-500 focus:ring-rose-500",
+            "w-full rounded-xl bg-white border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-xs transition duration-150 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-500/20 disabled:opacity-50 disabled:bg-slate-50",
+            error && "border-rose-500 focus:border-rose-500 focus:ring-rose-500/20",
             className
           )}
           {...props}
         />
-        {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
-        {helperText && !error && <p className="text-[11px] text-titanium-400">{helperText}</p>}
+        {error && <p className="text-xs text-rose-600 font-medium">{error}</p>}
+        {helperText && !error && <p className="text-[11px] text-slate-500">{helperText}</p>}
       </div>
     );
   }
@@ -51,7 +51,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label htmlFor={inputId} className="block text-xs font-semibold text-titanium-200 uppercase tracking-wider">
+          <label htmlFor={inputId} className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
             {label}
           </label>
         )}
@@ -59,14 +59,14 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           id={inputId}
           ref={ref}
           className={cn(
-            "w-full rounded-xl bg-lava-950/90 border border-lava-800 px-4 py-3 text-sm text-white placeholder-titanium-500 transition duration-150 focus:border-lava-500 focus:outline-none focus:ring-1 focus:ring-lava-500 disabled:opacity-50",
-            error && "border-rose-500 focus:border-rose-500 focus:ring-rose-500",
+            "w-full rounded-xl bg-white border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-xs transition duration-150 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-500/20 disabled:opacity-50 disabled:bg-slate-50",
+            error && "border-rose-500 focus:border-rose-500 focus:ring-rose-500/20",
             className
           )}
           {...props}
         />
-        {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
-        {helperText && !error && <p className="text-[11px] text-titanium-400">{helperText}</p>}
+        {error && <p className="text-xs text-rose-600 font-medium">{error}</p>}
+        {helperText && !error && <p className="text-[11px] text-slate-500">{helperText}</p>}
       </div>
     );
   }
@@ -87,7 +87,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label htmlFor={selectId} className="block text-xs font-semibold text-titanium-200 uppercase tracking-wider">
+          <label htmlFor={selectId} className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
             {label}
           </label>
         )}
@@ -95,19 +95,19 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           id={selectId}
           ref={ref}
           className={cn(
-            "w-full rounded-xl bg-lava-950/90 border border-lava-800 px-4 py-3 text-sm text-white placeholder-titanium-500 transition duration-150 focus:border-lava-500 focus:outline-none focus:ring-1 focus:ring-lava-500",
-            error && "border-rose-500 focus:border-rose-500 focus:ring-rose-500",
+            "w-full rounded-xl bg-white border border-slate-200 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 shadow-xs transition duration-150 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-500/20",
+            error && "border-rose-500 focus:border-rose-500 focus:ring-rose-500/20",
             className
           )}
           {...props}
         >
           {options.map((opt) => (
-            <option key={opt.value} value={opt.value} className="bg-lava-900 text-white">
+            <option key={opt.value} value={opt.value} className="bg-white text-slate-900">
               {opt.label}
             </option>
           ))}
         </select>
-        {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
+        {error && <p className="text-xs text-rose-600 font-medium">{error}</p>}
       </div>
     );
   }

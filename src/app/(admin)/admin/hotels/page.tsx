@@ -69,25 +69,25 @@ export default function AdminHotelsPage() {
       id: "pending_approval",
       label: "Pending Requests",
       count: counts.pending,
-      icon: <Clock className="w-3.5 h-3.5 text-signal-amber" />,
+      icon: <Clock className="w-3.5 h-3.5 text-amber-600" />,
     },
     {
       id: "approved",
       label: "Approved Hotels",
       count: counts.approved,
-      icon: <CheckCircle2 className="w-3.5 h-3.5 text-signal-emerald" />,
+      icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />,
     },
     {
       id: "rejected",
       label: "Rejected Hotels",
       count: counts.rejected,
-      icon: <XCircle className="w-3.5 h-3.5 text-signal-crimson" />,
+      icon: <XCircle className="w-3.5 h-3.5 text-rose-600" />,
     },
     {
       id: "suspended",
       label: "Suspended Hotels",
       count: counts.suspended,
-      icon: <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />,
+      icon: <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />,
     },
     {
       id: "all",
@@ -98,17 +98,21 @@ export default function AdminHotelsPage() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-slate-900">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white font-heading">Hotel Management Queues</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-slate-950 font-heading">Hotel Management Queues</h1>
+          <p className="text-xs text-slate-500 mt-1">
             Section 4 Admin Queues: Review applications, approve or reject, and suspend properties.
           </p>
         </div>
 
         <Link href="/admin/hotels/create">
-          <Button variant="primary" size="sm" className="gap-2 shadow-lg shadow-cobalt-500/20">
+          <Button
+            variant="primary"
+            size="sm"
+            className="gap-2 bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white font-bold shadow-md shadow-red-500/20"
+          >
             <PlusCircle className="w-4 h-4" />
             <span>Add Hotel Profile (Option 1)</span>
           </Button>
@@ -119,22 +123,22 @@ export default function AdminHotelsPage() {
       <Tabs tabs={tabs} activeTab={activeTab} onChange={(id) => setActiveTab(id)} />
 
       {/* Search Input */}
-      <form onSubmit={handleSearch} className="glass-panel rounded-xl p-3 flex items-center gap-3">
+      <form onSubmit={handleSearch} className="bg-white border border-slate-200 shadow-xs rounded-2xl p-3 flex items-center gap-3">
         <Search className="w-4 h-4 text-slate-400 shrink-0" />
         <input
           type="text"
           placeholder="Search hotel name, city, owner legal business name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="bg-transparent text-xs text-white placeholder-slate-500 w-full focus:outline-none"
+          className="bg-transparent text-xs text-slate-900 placeholder-slate-400 w-full focus:outline-none font-medium"
         />
-        <Button type="submit" variant="secondary" size="sm">
+        <Button type="submit" variant="secondary" size="sm" className="bg-slate-100 text-slate-800 hover:bg-slate-200">
           Search
         </Button>
       </form>
 
       {/* Hotels Table */}
-      <div className="glass-panel rounded-2xl overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
         {isLoading ? (
           <div className="p-12 text-center text-slate-400 text-xs">Loading hotels...</div>
         ) : hotels.length === 0 ? (
@@ -143,8 +147,8 @@ export default function AdminHotelsPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-cobalt-950/80 text-[11px] uppercase font-semibold text-slate-400 border-b border-cobalt-800">
+            <table className="w-full text-left text-xs text-slate-600">
+              <thead className="bg-slate-50 text-[11px] uppercase font-semibold text-slate-500 border-b border-slate-200">
                 <tr>
                   <th className="px-5 py-3.5">Hotel Property</th>
                   <th className="px-5 py-3.5">Owner & Legal Entity</th>
@@ -154,29 +158,29 @@ export default function AdminHotelsPage() {
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-cobalt-800/40">
+              <tbody className="divide-y divide-slate-100">
                 {hotels.map((h) => (
-                  <tr key={h.id} className="hover:bg-cobalt-900/40 transition">
+                  <tr key={h.id} className="hover:bg-slate-50/60 transition">
                     <td className="px-5 py-4">
-                      <p className="font-bold text-white text-sm">{h.name}</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <p className="font-bold text-slate-900 text-sm">{h.name}</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
                         {h.city}, {h.country}
                       </p>
                     </td>
 
                     <td className="px-5 py-4">
-                      <p className="font-semibold text-slate-200">{h.businessName}</p>
-                      <p className="text-[11px] text-slate-400">{h.email}</p>
+                      <p className="font-semibold text-slate-800">{h.businessName}</p>
+                      <p className="text-[11px] text-slate-400 font-mono">{h.email}</p>
                     </td>
 
                     <td className="px-5 py-4">
-                      <span className="px-2 py-0.5 rounded bg-cobalt-950 border border-cobalt-800 text-cobalt-300 font-semibold text-[10px]">
+                      <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 font-semibold text-[10px]">
                         {h.category}
                       </span>
                       <p className="text-[10px] text-slate-400 mt-1">{h.totalRooms} Rooms</p>
                     </td>
 
-                    <td className="px-5 py-4 text-slate-400">{formatDate(h.createdAt)}</td>
+                    <td className="px-5 py-4 text-slate-500 font-mono">{formatDate(h.createdAt)}</td>
 
                     <td className="px-5 py-4">
                       <PulseStatusBadge status={h.status} />
@@ -184,7 +188,11 @@ export default function AdminHotelsPage() {
 
                     <td className="px-5 py-4 text-right">
                       <Link href={`/admin/hotels/${h.id}`}>
-                        <Button variant="primary" size="sm" className="gap-1.5">
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          className="gap-1.5 bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+                        >
                           <Eye className="w-3.5 h-3.5" />
                           <span>Review & Manage</span>
                         </Button>

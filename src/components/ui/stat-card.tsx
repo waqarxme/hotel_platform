@@ -24,33 +24,33 @@ export function StatCard({
   className,
 }: StatCardProps) {
   const iconColors = {
-    lava: "bg-lava-500/15 text-lava-400 border-lava-500/30",
-    cobalt: "bg-lava-500/15 text-lava-400 border-lava-500/30",
-    emerald: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-    amber: "bg-amber-500/15 text-amber-400 border-amber-500/30",
-    crimson: "bg-rose-500/15 text-rose-400 border-rose-500/30",
-    violet: "bg-purple-500/15 text-purple-400 border-purple-500/30",
+    lava: "bg-red-50 text-red-600 border-red-200",
+    cobalt: "bg-red-50 text-red-600 border-red-200",
+    emerald: "bg-emerald-50 text-emerald-600 border-emerald-200",
+    amber: "bg-amber-50 text-amber-600 border-amber-200",
+    crimson: "bg-rose-50 text-rose-600 border-rose-200",
+    violet: "bg-purple-50 text-purple-600 border-purple-200",
   };
 
   return (
-    <div className={cn("glass-card rounded-2xl p-5 relative overflow-hidden group hover:border-lava-600 transition duration-200 shadow-xl border border-lava-800", className)}>
+    <div className={cn("bg-white rounded-2xl p-5 relative overflow-hidden group hover:border-red-500 transition-all duration-200 shadow-sm hover:shadow-md border border-slate-200", className)}>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[11px] font-bold text-titanium-400 uppercase tracking-wider">{title}</p>
-          <h4 className="text-2xl sm:text-3xl font-bold text-white mt-1.5 font-heading tracking-tight">{value}</h4>
+          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">{title}</p>
+          <h4 className="text-2xl sm:text-3xl font-bold text-slate-950 mt-1.5 font-heading tracking-tight">{value}</h4>
           {(change || subtext) && (
             <div className="flex items-center gap-2 mt-2">
               {change && (
                 <span
                   className={cn(
                     "text-xs font-semibold px-2 py-0.5 rounded-md font-mono",
-                    isPositive ? "text-emerald-400 bg-emerald-500/15 border border-emerald-500/30" : "text-rose-400 bg-rose-500/15 border border-rose-500/30"
+                    isPositive ? "text-emerald-700 bg-emerald-50 border border-emerald-200" : "text-rose-700 bg-rose-50 border border-rose-200"
                   )}
                 >
                   {change}
                 </span>
               )}
-              {subtext && <span className="text-xs text-titanium-400">{subtext}</span>}
+              {subtext && <span className="text-xs text-slate-500">{subtext}</span>}
             </div>
           )}
         </div>

@@ -11,9 +11,8 @@ import {
   Building2,
   LogOut,
   Sparkles,
-  ChevronDown,
-  UserCheck,
   Bell,
+  User as UserIcon,
 } from "lucide-react";
 
 export function Navbar() {
@@ -21,7 +20,6 @@ export function Navbar() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [hotel, setHotel] = useState<Hotel | null>(null);
-  const [showDemoMenu, setShowDemoMenu] = useState(false);
 
   // Notifications State
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -76,28 +74,6 @@ export function Navbar() {
     }
   };
 
-  const handleQuickLogin = async (email: string) => {
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password: "password123" }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data.user);
-        setShowDemoMenu(false);
-        if (data.user.role === "admin") {
-          router.push("/admin/dashboard");
-        } else {
-          router.push("/owner/dashboard");
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
     setUser(null);
@@ -106,70 +82,76 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="p-2 rounded-xl bg-gradient-to-r from-lava-primary to-lava-orange text-white shadow-md shadow-red-500/25 group-hover:scale-105 transition duration-200">
+          <div className="p-2 rounded-xl bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white shadow-md shadow-red-500/25 group-hover:scale-105 transition-transform duration-200">
             <HotelIcon className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-lg font-bold text-slate-900 tracking-tight font-heading group-hover:text-red-600 transition">
+            <span className="text-lg font-bold text-slate-950 tracking-tight font-heading group-hover:text-red-600 transition-colors">
               Cobalt<span className="text-red-600">Hotels</span>
             </span>
-            <span className="hidden sm:inline-block ml-2 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 rounded">
-              Platform
+            <span className="hidden sm:inline-block ml-2 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-red-50 border border-red-200/80 text-red-700 rounded-md">
+              Enterprise
             </span>
           </div>
         </Link>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold">
+        <nav className="hidden md:flex items-center gap-7 text-xs font-semibold">
           <Link
             href="/"
-            className={`transition ${
-              pathname === "/" ? "text-red-600 font-bold" : "text-slate-600 hover:text-slate-900"
+            className={`transition-colors ${
+              pathname === "/"
+                ? "text-red-600 font-bold"
+                : "text-slate-600 hover:text-slate-950"
             }`}
           >
             Explore Hotels
           </Link>
           <Link
             href="/register-hotel"
-            className={`flex items-center gap-1.5 transition ${
-              pathname === "/register-hotel" ? "text-red-600 font-bold" : "text-slate-600 hover:text-slate-900"
+            className={`flex items-center gap-1.5 transition-colors ${
+              pathname === "/register-hotel"
+                ? "text-red-600 font-bold"
+                : "text-slate-600 hover:text-slate-950"
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-red-500" />
-            <span>List Your Hotel (Option 2)</span>
+            <span>List Your Hotel</span>
           </Link>
+
           {user?.role === "admin" && (
             <Link
               href="/admin/dashboard"
-              className="flex items-center gap-1 text-red-600 hover:text-red-700 font-bold"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 font-bold transition-colors"
             >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Admin Portal</span>
+              <ShieldCheck className="w-4 h-4 text-red-600" />
+              <span>Admin Console</span>
             </Link>
           )}
+
           {user?.role === "hotel_owner" && (
             <Link
               href="/owner/dashboard"
-              className="flex items-center gap-1 text-red-600 hover:text-red-700 font-bold"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 font-bold transition-colors"
             >
-              <Building2 className="w-3.5 h-3.5" />
+              <Building2 className="w-4 h-4 text-red-600" />
               <span>Owner Dashboard</span>
             </Link>
           )}
         </nav>
 
-        {/* Right Actions & Demo Switcher */}
+        {/* Right Actions */}
         <div className="flex items-center gap-3">
-          {/* Notification Bell */}
+          {/* Notification Bell for logged-in users */}
           {user && (
             <div className="relative">
               <button
                 onClick={() => setShowNotifMenu(!showNotifMenu)}
-                className="relative p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 transition"
+                className="relative p-2 rounded-xl bg-slate-100/80 hover:bg-slate-200 text-slate-700 hover:text-slate-950 transition-colors"
                 title="Notifications"
               >
                 <Bell className="w-4 h-4" />
@@ -183,7 +165,7 @@ export function Navbar() {
               {showNotifMenu && (
                 <div className="absolute right-0 mt-2 w-80 rounded-2xl bg-white border border-slate-200 shadow-2xl p-3 z-50 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between pb-2 border-b border-slate-100 mb-2">
-                    <span className="text-xs font-bold text-slate-900 font-heading">Notifications</span>
+                    <span className="text-xs font-bold text-slate-950 font-heading">Notifications</span>
                     {unreadCount > 0 && (
                       <button
                         onClick={handleMarkAllRead}
@@ -206,7 +188,7 @@ export function Navbar() {
                           className={`block p-2.5 rounded-xl border transition ${
                             !n.read
                               ? "bg-red-50/60 border-red-200 text-slate-900"
-                              : "bg-slate-50/70 border-slate-100 text-slate-500"
+                              : "bg-slate-50 border-slate-100 text-slate-500"
                           }`}
                         >
                           <p className="text-xs font-bold text-slate-900">{n.title}</p>
@@ -220,74 +202,24 @@ export function Navbar() {
             </div>
           )}
 
-          {/* 2 Default Accounts Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setShowDemoMenu(!showDemoMenu)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 hover:border-slate-300 transition shadow-sm"
-              title="Quickly switch between default accounts"
-            >
-              <UserCheck className="w-3.5 h-3.5 text-red-600" />
-              <span className="hidden sm:inline">Accounts</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
-            </button>
-
-            {showDemoMenu && (
-              <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl p-2 z-50 animate-in fade-in duration-150">
-                <div className="px-3 py-2 border-b border-slate-100 mb-1">
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    Default Users (1 of each role)
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <button
-                    onClick={() => handleQuickLogin("admin@hotelplatform.com")}
-                    className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 text-xs flex items-center justify-between group transition"
-                  >
-                    <div>
-                      <p className="font-bold text-slate-900 group-hover:text-red-600">Master Admin</p>
-                      <p className="text-[10px] text-slate-500 font-mono">admin@hotelplatform.com</p>
-                    </div>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-red-50 text-red-600 font-bold border border-red-200">
-                      Admin
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => handleQuickLogin("owner@serenapalace.com")}
-                    className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-slate-50 text-xs flex items-center justify-between group transition"
-                  >
-                    <div>
-                      <p className="font-bold text-slate-900 group-hover:text-emerald-600">Hotel Owner (Serena)</p>
-                      <p className="text-[10px] text-slate-500 font-mono">owner@serenapalace.com</p>
-                    </div>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 font-bold border border-emerald-200">
-                      Owner
-                    </span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* User Profile or Login */}
+          {/* User Profile or Authentication CTA Buttons */}
           {user ? (
             <div className="flex items-center gap-2">
               <Link
                 href={user.role === "admin" ? "/admin/dashboard" : "/owner/dashboard"}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition shadow-sm"
+                className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200 border border-slate-200 transition-colors shadow-xs"
               >
                 <div className="w-6 h-6 rounded-full bg-gradient-to-r from-lava-primary to-lava-orange text-white flex items-center justify-center font-bold text-xs shadow-sm">
                   {user.name.charAt(0)}
                 </div>
-                <div className="hidden lg:block text-left">
-                  <p className="text-xs font-semibold text-slate-900 leading-tight">{user.name}</p>
+                <div className="hidden sm:block text-left">
+                  <p className="text-xs font-semibold text-slate-950 leading-tight">{user.name}</p>
                   <p className="text-[10px] text-slate-500 capitalize">{user.role.replace("_", " ")}</p>
                 </div>
               </Link>
               <button
                 onClick={handleLogout}
-                className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                 title="Sign out"
               >
                 <LogOut className="w-4 h-4" />
@@ -296,17 +228,23 @@ export function Navbar() {
           ) : (
             <div className="flex items-center gap-2">
               <Link href="/login">
-                <Button variant="outline" size="sm" className="border-slate-200 text-slate-800 hover:bg-slate-50">
-                  Sign In
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-slate-300 text-slate-800 hover:bg-slate-100 font-semibold"
+                >
+                  <UserIcon className="w-3.5 h-3.5 mr-1.5" />
+                  <span>Sign In</span>
                 </Button>
               </Link>
               <Link href="/register-hotel">
                 <Button
                   variant="primary"
                   size="sm"
-                  className="bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold shadow-md shadow-red-500/20"
+                  className="bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-bold shadow-md shadow-red-500/25"
                 >
-                  Partner With Us
+                  <Sparkles className="w-3.5 h-3.5 mr-1.5" />
+                  <span>List Property</span>
                 </Button>
               </Link>
             </div>

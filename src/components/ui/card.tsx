@@ -10,7 +10,7 @@ export function Card({ className, glass = true, ...props }: CardProps) {
     <div
       className={cn(
         "rounded-2xl transition-all duration-200",
-        glass ? "glass-panel" : "bg-lava-900 border border-lava-800",
+        glass ? "glass-panel" : "bg-white border border-slate-200 shadow-sm",
         className
       )}
       {...props}
@@ -19,15 +19,15 @@ export function Card({ className, glass = true, ...props }: CardProps) {
 }
 
 export function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("p-6 border-b border-lava-800/80", className)} {...props} />;
+  return <div className={cn("p-6 border-b border-slate-100", className)} {...props} />;
 }
 
 export function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h3 className={cn("text-lg font-bold text-white tracking-tight font-heading", className)} {...props} />;
+  return <h3 className={cn("text-lg font-bold text-slate-950 tracking-tight font-heading", className)} {...props} />;
 }
 
 export function CardDescription({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn("text-xs text-titanium-400 mt-1", className)} {...props} />;
+  return <p className={cn("text-xs text-slate-500 mt-1", className)} {...props} />;
 }
 
 export function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {

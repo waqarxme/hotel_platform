@@ -12,14 +12,9 @@ import {
   MapPin,
   Star,
   Users,
-  Bed,
-  CheckCircle2,
-  Calendar,
-  ExternalLink,
-  MessageSquare,
   ShieldCheck,
-  Send,
-  Sparkles,
+  CheckCircle2,
+  ExternalLink,
 } from "lucide-react";
 
 export default function HotelDetailPage() {
@@ -136,8 +131,8 @@ export default function HotelDetailPage() {
   if (isLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <div className="w-12 h-12 border-4 border-lava-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-titanium-400 text-sm">Loading hotel property...</p>
+        <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-slate-500 text-sm">Loading hotel property...</p>
       </div>
     );
   }
@@ -145,8 +140,8 @@ export default function HotelDetailPage() {
   if (!hotel) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <h2 className="text-2xl font-bold text-white">Hotel Not Found</h2>
-        <p className="text-titanium-400 text-sm">This hotel may be unapproved or suspended.</p>
+        <h2 className="text-2xl font-bold text-slate-900">Hotel Not Found</h2>
+        <p className="text-slate-500 text-sm">This hotel may be unapproved or suspended.</p>
         <Button variant="outline" onClick={() => router.push("/")}>
           Return to Explorer
         </Button>
@@ -161,24 +156,24 @@ export default function HotelDetailPage() {
   ].filter(Boolean) as string[];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 text-slate-900">
       {/* Header Info */}
       <div className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
-              <Badge variant="lava" size="sm">
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-900 text-white shadow-sm">
                 {hotel.category}
-              </Badge>
+              </span>
               {hotel.isVerified && (
-                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                  <ShieldCheck className="w-3.5 h-3.5" /> Verified Partner Property
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Verified Partner Property
                 </span>
               )}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white font-heading">{hotel.name}</h1>
-            <div className="flex items-center gap-2 text-xs text-titanium-300">
-              <MapPin className="w-4 h-4 text-lava-400 shrink-0" />
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-950 font-heading">{hotel.name}</h1>
+            <div className="flex items-center gap-2 text-xs text-slate-600">
+              <MapPin className="w-4 h-4 text-red-600 shrink-0" />
               <span>
                 {hotel.address}, {hotel.city}, {hotel.country}
               </span>
@@ -187,7 +182,7 @@ export default function HotelDetailPage() {
                   href={hotel.googleMapsUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-lava-400 hover:text-lava-300 ml-2 font-semibold"
+                  className="inline-flex items-center gap-1 text-red-600 hover:text-red-700 ml-2 font-semibold"
                 >
                   <span>Google Maps</span>
                   <ExternalLink className="w-3 h-3" />
@@ -197,14 +192,14 @@ export default function HotelDetailPage() {
           </div>
 
           <div className="text-right">
-            <p className="text-xs text-titanium-400 uppercase font-semibold">Total Capacity</p>
-            <p className="text-2xl font-bold text-white font-heading">{hotel.totalRooms} Rooms</p>
+            <p className="text-xs text-slate-400 uppercase font-semibold">Total Capacity</p>
+            <p className="text-2xl font-bold text-slate-900 font-heading">{hotel.totalRooms} Rooms</p>
           </div>
         </div>
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 rounded-3xl overflow-hidden max-h-[480px]">
-          <div className="md:col-span-2 relative h-80 md:h-[480px] bg-lava-950">
+          <div className="md:col-span-2 relative h-80 md:h-[480px] bg-slate-100">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={allPhotos[0] || "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200"}
@@ -213,7 +208,7 @@ export default function HotelDetailPage() {
             />
           </div>
           <div className="hidden md:grid grid-rows-2 gap-3.5 h-[480px]">
-            <div className="relative h-full bg-lava-950 overflow-hidden">
+            <div className="relative h-full bg-slate-100 overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={allPhotos[1] || allPhotos[0]}
@@ -221,7 +216,7 @@ export default function HotelDetailPage() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="relative h-full bg-lava-950 overflow-hidden">
+            <div className="relative h-full bg-slate-100 overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={allPhotos[2] || allPhotos[0]}
@@ -236,26 +231,26 @@ export default function HotelDetailPage() {
       {/* Description & Amenities */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="glass-panel rounded-2xl p-6 sm:p-8 space-y-4">
-            <h3 className="text-lg font-bold text-white font-heading">About This Property</h3>
-            <p className="text-titanium-200 text-sm leading-relaxed whitespace-pre-line">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+            <h3 className="text-lg font-bold text-slate-950 font-heading">About This Property</h3>
+            <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-line">
               {hotel.description}
             </p>
           </div>
 
           {/* Amenities */}
-          <div className="glass-panel rounded-2xl p-6 sm:p-8 space-y-4">
-            <h3 className="text-lg font-bold text-white font-heading">Featured Hotel Amenities</h3>
+          <div className="bg-white rounded-2xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+            <h3 className="text-lg font-bold text-slate-950 font-heading">Featured Hotel Amenities</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {hotel.amenities && hotel.amenities.length > 0 ? (
                 hotel.amenities.map((amenity) => (
-                  <div key={amenity} className="flex items-center gap-2 text-xs text-titanium-200 font-medium">
-                    <CheckCircle2 className="w-4 h-4 text-signal-emerald shrink-0" />
+                  <div key={amenity} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>{amenity}</span>
                   </div>
                 ))
               ) : (
-                <p className="text-xs text-titanium-400 col-span-3">Standard hospitality amenities included.</p>
+                <p className="text-xs text-slate-400 col-span-3">Standard hospitality amenities included.</p>
               )}
             </div>
           </div>
@@ -263,19 +258,19 @@ export default function HotelDetailPage() {
 
         {/* Property Highlights */}
         <div className="space-y-6">
-          <div className="glass-panel rounded-2xl p-6 sm:p-8 space-y-4 border-l-4 border-l-lava-500">
-            <h3 className="text-base font-bold text-white font-heading">Guest Protection & Assurance</h3>
-            <ul className="space-y-3.5 text-xs text-titanium-200">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm border-l-4 border-l-red-600">
+            <h3 className="text-base font-bold text-slate-950 font-heading">Guest Protection & Assurance</h3>
+            <ul className="space-y-3.5 text-xs text-slate-700">
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-signal-emerald shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span>Instant reservation confirmed directly with property management</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-signal-emerald shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span>Free cancellation up to 48 hours before check-in date</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-signal-emerald shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span>Complimentary room sanitization by certified regional squads</span>
               </li>
             </ul>
@@ -285,9 +280,9 @@ export default function HotelDetailPage() {
 
       {/* Available Room Categories */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-white font-heading">Available Room Categories</h2>
+        <h2 className="text-2xl font-bold text-slate-950 font-heading">Available Room Categories</h2>
         {rooms.length === 0 ? (
-          <div className="glass-panel rounded-2xl p-8 text-center text-titanium-400 text-xs">
+          <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center text-slate-500 text-xs shadow-sm">
             No rooms published yet by this hotel.
           </div>
         ) : (
@@ -295,13 +290,13 @@ export default function HotelDetailPage() {
             {rooms.map((room) => (
               <div
                 key={room.id}
-                className="glass-card rounded-2xl overflow-hidden border border-lava-800 flex flex-col justify-between"
+                className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between"
               >
                 {room.photos && room.photos.length > 0 && (
-                  <div className="relative h-48 w-full bg-lava-950">
+                  <div className="relative h-48 w-full bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={room.photos[0]} alt={room.name} className="w-full h-full object-cover" />
-                    <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-lava-950/90 text-lava-400 border border-lava-800">
+                    <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-white/95 text-slate-900 border border-slate-200 shadow-xs">
                       {room.type}
                     </span>
                   </div>
@@ -310,19 +305,19 @@ export default function HotelDetailPage() {
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex items-center justify-between">
-                      <h4 className="text-base font-bold text-white font-heading">{room.name}</h4>
-                      <span className="flex items-center gap-1 text-xs text-titanium-300">
-                        <Users className="w-3.5 h-3.5 text-lava-400" /> Max {room.capacity} Guests
+                      <h4 className="text-base font-bold text-slate-950 font-heading">{room.name}</h4>
+                      <span className="flex items-center gap-1 text-xs text-slate-500">
+                        <Users className="w-3.5 h-3.5 text-red-600" /> Max {room.capacity} Guests
                       </span>
                     </div>
-                    <p className="text-xs text-titanium-400 mt-2 line-clamp-2">{room.description}</p>
+                    <p className="text-xs text-slate-600 mt-2 line-clamp-2">{room.description}</p>
 
                     {room.amenities && (
                       <div className="flex flex-wrap gap-1.5 mt-3">
                         {room.amenities.map((a) => (
                           <span
                             key={a}
-                            className="px-2 py-0.5 bg-lava-950 border border-lava-800 text-[10px] text-titanium-300 rounded-md"
+                            className="px-2 py-0.5 bg-slate-100 border border-slate-200 text-[10px] text-slate-700 rounded-md"
                           >
                             {a}
                           </span>
@@ -331,15 +326,20 @@ export default function HotelDetailPage() {
                     )}
                   </div>
 
-                  <div className="pt-4 border-t border-lava-800 flex items-center justify-between">
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-titanium-400 uppercase font-semibold">Nightly Rate</span>
-                      <p className="text-xl font-bold text-white font-mono">
+                      <span className="text-[10px] text-slate-400 uppercase font-semibold">Nightly Rate</span>
+                      <p className="text-xl font-bold text-slate-900 font-mono">
                         {formatCurrency(room.pricePerNight)}
                       </p>
                     </div>
 
-                    <Button variant="primary" size="sm" onClick={() => handleOpenBooking(room)}>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => handleOpenBooking(room)}
+                      className="bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white font-bold"
+                    >
                       Reserve Room
                     </Button>
                   </div>
@@ -351,13 +351,13 @@ export default function HotelDetailPage() {
       </section>
 
       {/* Reviews Section */}
-      <section className="space-y-6 pt-6 border-t border-lava-800">
+      <section className="space-y-6 pt-6 border-t border-slate-200">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-white font-heading">
+            <h2 className="text-2xl font-bold text-slate-950 font-heading">
               Guest Reviews ({reviews.length})
             </h2>
-            <p className="text-xs text-titanium-400 mt-1">Verified reviews from past guests</p>
+            <p className="text-xs text-slate-500 mt-1">Verified reviews from past guests</p>
           </div>
         </div>
 
@@ -365,31 +365,31 @@ export default function HotelDetailPage() {
           {/* Reviews List */}
           <div className="lg:col-span-2 space-y-4">
             {reviews.length === 0 ? (
-              <p className="text-xs text-titanium-400">Be the first to review this property!</p>
+              <p className="text-xs text-slate-500">Be the first to review this property!</p>
             ) : (
               reviews.map((rev) => (
-                <div key={rev.id} className="glass-panel rounded-2xl p-5 space-y-3">
+                <div key={rev.id} className="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-xs">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-bold text-white">{rev.guestName}</p>
-                      <p className="text-[10px] text-titanium-400">{formatDate(rev.createdAt)}</p>
+                      <p className="text-xs font-bold text-slate-950">{rev.guestName}</p>
+                      <p className="text-[10px] text-slate-400">{formatDate(rev.createdAt)}</p>
                     </div>
-                    <div className="flex items-center gap-1 text-signal-amber">
+                    <div className="flex items-center gap-1 text-amber-500">
                       {[...Array(rev.rating)].map((_, i) => (
                         <Star key={i} className="w-3.5 h-3.5 fill-current" />
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-titanium-200 leading-relaxed bg-lava-950/60 p-3.5 rounded-xl border border-lava-800/80">
+                  <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100">
                     &ldquo;{rev.comment}&rdquo;
                   </p>
 
                   {rev.response && (
-                    <div className="mt-3 p-3.5 rounded-xl bg-lava-900 border-l-2 border-lava-500 space-y-1">
-                      <p className="text-[10px] font-bold text-lava-400 uppercase tracking-wider">
+                    <div className="mt-3 p-3.5 rounded-xl bg-red-50/50 border-l-2 border-red-600 space-y-1">
+                      <p className="text-[10px] font-bold text-red-700 uppercase tracking-wider">
                         Response from Property Manager
                       </p>
-                      <p className="text-xs text-titanium-200">{rev.response}</p>
+                      <p className="text-xs text-slate-700">{rev.response}</p>
                     </div>
                   )}
                 </div>
@@ -398,8 +398,8 @@ export default function HotelDetailPage() {
           </div>
 
           {/* Submit Review Form */}
-          <div className="glass-panel rounded-2xl p-6 space-y-4 h-fit">
-            <h3 className="text-sm font-bold text-white font-heading">Leave a Review</h3>
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 h-fit shadow-xs">
+            <h3 className="text-sm font-bold text-slate-950 font-heading">Leave a Review</h3>
             <form onSubmit={handleReviewSubmit} className="space-y-3.5">
               <Input
                 label="Your Name"
@@ -417,7 +417,7 @@ export default function HotelDetailPage() {
                 required
               />
               <div>
-                <label className="block text-xs font-semibold text-titanium-200 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider mb-1">
                   Rating
                 </label>
                 <div className="flex items-center gap-2">
@@ -427,7 +427,7 @@ export default function HotelDetailPage() {
                       type="button"
                       onClick={() => setReviewForm({ ...reviewForm, rating: star })}
                       className={`p-1 text-lg ${
-                        reviewForm.rating >= star ? "text-signal-amber" : "text-titanium-500"
+                        reviewForm.rating >= star ? "text-amber-500" : "text-slate-300"
                       }`}
                     >
                       ★
@@ -443,7 +443,13 @@ export default function HotelDetailPage() {
                 onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
                 required
               />
-              <Button type="submit" variant="primary" size="sm" isLoading={reviewSubmitting} className="w-full">
+              <Button
+                type="submit"
+                variant="primary"
+                size="sm"
+                isLoading={reviewSubmitting}
+                className="w-full bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+              >
                 Submit Review
               </Button>
             </form>
@@ -464,13 +470,13 @@ export default function HotelDetailPage() {
       >
         {bookingSuccess ? (
           <div className="space-y-4 py-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <p className="text-sm text-titanium-200">
+            <p className="text-sm text-slate-700">
               Thank you, <strong>{bookingForm.guestName}</strong>! Your reservation has been sent directly to the hotel management team.
             </p>
-            <Button variant="primary" size="sm" onClick={() => setBookingModalOpen(false)}>
+            <Button variant="primary" size="sm" onClick={() => setBookingModalOpen(false)} className="bg-slate-900 text-white">
               Done
             </Button>
           </div>
@@ -518,9 +524,9 @@ export default function HotelDetailPage() {
               />
             </div>
 
-            <div className="p-4 rounded-xl bg-lava-950 border border-lava-800 flex items-center justify-between text-xs">
-              <span className="text-titanium-400">Nightly rate:</span>
-              <span className="text-sm font-bold text-white font-mono">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <span className="text-slate-500">Nightly rate:</span>
+              <span className="text-sm font-bold text-slate-900 font-mono">
                 {selectedRoom ? formatCurrency(selectedRoom.pricePerNight) : "$0"}
               </span>
             </div>
@@ -529,7 +535,13 @@ export default function HotelDetailPage() {
               <Button type="button" variant="outline" size="sm" onClick={() => setBookingModalOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" variant="primary" size="sm" isLoading={bookingLoading}>
+              <Button
+                type="submit"
+                variant="primary"
+                size="sm"
+                isLoading={bookingLoading}
+                className="bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+              >
                 Confirm Reservation
               </Button>
             </div>
