@@ -75,71 +75,63 @@ export default function HomePage() {
 
   return (
     <div className="space-y-24 pb-24 overflow-hidden">
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-20 pb-28 px-4 sm:px-6 lg:px-8 border-b border-lava-800/80">
-        {/* Background 4K Architecture Image with Volcanic Lava Glow */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&auto=format&fit=crop&q=90"
-            alt="Luxury Hotel Resort Panoramic"
-            className="w-full h-full object-cover brightness-[0.28] contrast-[1.2] scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-lava-950/80 via-lava-950/90 to-lava-950" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-lava-500/25 via-lava-600/10 to-transparent blur-3xl pointer-events-none" />
-        </div>
+      {/* 1. LIGHT-FIRST CRISP WHITE HERO SECTION */}
+      <section className="relative pt-20 pb-28 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+        {/* Subtle Ambient Light Grid & Glow */}
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-80 bg-gradient-to-b from-lava-500/10 via-lava-500/5 to-transparent blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto text-center space-y-8 relative z-10">
           {/* Top Pill */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-lava-500/20 border border-lava-500/40 text-lava-300 text-xs font-bold backdrop-blur-md shadow-lg shadow-lava-500/15">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-lava-50 border border-lava-200 text-lava-600 text-xs font-bold shadow-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lava-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-lava-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-lava-600" />
             </span>
             <span>Enterprise Hospitality Infrastructure & Verified Bookings</span>
           </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white font-heading leading-[1.1]">
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 font-heading leading-[1.1]">
             Experience Verified Stays & <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-lava-400 via-lava-200 to-white bg-clip-text text-transparent drop-shadow-sm">
+            <span className="bg-gradient-to-r from-lava-600 via-lava-500 to-slate-900 bg-clip-text text-transparent drop-shadow-sm">
               Automated Property Management
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-titanium-200 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed font-normal">
+          <p className="text-slate-600 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed font-normal">
             Direct reservation control for premium travelers. Automated administrative onboarding, instant room availability management, and complimentary cleaning fleet dispatch for hotel partners.
           </p>
 
-          {/* Advanced Search Bar */}
+          {/* Advanced Search Bar (Crisp Light Card) */}
           <form
             onSubmit={handleSearchSubmit}
-            className="max-w-4xl mx-auto p-3 bg-lava-900/95 rounded-2xl border border-lava-700/90 shadow-2xl shadow-black flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
+            className="max-w-4xl mx-auto p-3 bg-white/95 rounded-2xl border border-slate-200 shadow-2xl shadow-slate-200/70 flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
           >
-            <div className="flex-1 flex items-center gap-3 px-3 py-2 w-full border-b md:border-b-0 md:border-r border-lava-800">
-              <MapPin className="w-5 h-5 text-lava-400 shrink-0" />
+            <div className="flex-1 flex items-center gap-3 px-3 py-2 w-full border-b md:border-b-0 md:border-r border-slate-200">
+              <MapPin className="w-5 h-5 text-lava-500 shrink-0" />
               <div className="text-left w-full">
-                <span className="block text-[10px] uppercase font-bold text-titanium-400 tracking-wider">Destination</span>
+                <span className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Destination</span>
                 <input
                   type="text"
                   placeholder="Where are you going? (e.g. Islamabad, Lahore, Naran)"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-transparent text-xs sm:text-sm text-white placeholder-titanium-500 focus:outline-none font-medium mt-0.5"
+                  className="w-full bg-transparent text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none font-semibold mt-0.5"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-3 py-2 w-full md:w-56 border-b md:border-b-0 md:border-r border-lava-800">
-              <Calendar className="w-5 h-5 text-lava-400 shrink-0" />
+            <div className="flex items-center gap-3 px-3 py-2 w-full md:w-56 border-b md:border-b-0 md:border-r border-slate-200">
+              <Calendar className="w-5 h-5 text-lava-500 shrink-0" />
               <div className="text-left">
-                <span className="block text-[10px] uppercase font-bold text-titanium-400 tracking-wider">Dates</span>
-                <p className="text-xs text-white font-semibold mt-0.5">Flexible • 2026 Season</p>
+                <span className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Dates</span>
+                <p className="text-xs text-slate-900 font-semibold mt-0.5">Flexible • 2026 Season</p>
               </div>
             </div>
 
-            <Button type="submit" variant="primary" size="lg" className="w-full md:w-auto px-8 shrink-0">
+            <Button type="submit" variant="primary" size="lg" className="w-full md:w-auto px-8 shrink-0 bg-lava-600 hover:bg-lava-700 text-white shadow-lg shadow-lava-600/30 font-bold">
               <Search className="w-4 h-4 mr-2" />
               <span>Explore Stays</span>
             </Button>
@@ -153,8 +145,8 @@ export default function HomePage() {
                 onClick={() => setCategory(cat)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition duration-200 capitalize ${
                   category === cat
-                    ? "bg-lava-500 text-white shadow-lg shadow-lava-500/30 scale-105"
-                    : "bg-lava-900/80 border border-lava-800 text-titanium-300 hover:text-white hover:border-lava-500/50"
+                    ? "bg-lava-600 text-white shadow-lg shadow-lava-600/25 scale-105"
+                    : "bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 hover:text-slate-900"
                 }`}
               >
                 {cat}
@@ -163,22 +155,22 @@ export default function HomePage() {
           </div>
 
           {/* Stats Ticker */}
-          <div className="pt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-lava-800/80 text-center">
+          <div className="pt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-slate-200 text-center">
             <div className="space-y-1">
-              <p className="text-2xl sm:text-3xl font-bold text-white font-heading">100%</p>
-              <p className="text-[11px] text-titanium-400 font-medium uppercase tracking-wider">Admin Verified</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 font-heading">100%</p>
+              <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Admin Verified</p>
             </div>
             <div className="space-y-1">
-              <p className="text-2xl sm:text-3xl font-bold text-lava-400 font-heading">1 in 5</p>
-              <p className="text-[11px] text-titanium-400 font-medium uppercase tracking-wider">Free Cleanings Earned</p>
+              <p className="text-2xl sm:text-3xl font-bold text-lava-600 font-heading">1 in 5</p>
+              <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Free Cleanings Earned</p>
             </div>
             <div className="space-y-1">
-              <p className="text-2xl sm:text-3xl font-bold text-white font-heading">0 Sec</p>
-              <p className="text-[11px] text-titanium-400 font-medium uppercase tracking-wider">Instant Confirmation</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 font-heading">0 Sec</p>
+              <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Instant Confirmation</p>
             </div>
             <div className="space-y-1">
               <p className="text-2xl sm:text-3xl font-bold text-signal-emerald font-heading">24/7</p>
-              <p className="text-[11px] text-titanium-400 font-medium uppercase tracking-wider">Fleet Dispatch</p>
+              <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Fleet Dispatch</p>
             </div>
           </div>
         </div>
