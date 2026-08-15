@@ -47,21 +47,38 @@ export async function POST(req: NextRequest) {
       return errorResponse("HOTEL_UNAVAILABLE", "This hotel is currently not accepting reservations", 400);
     }
 
-    const rooms = db.getRoomsByHotelId(hotel.id);
-    const room = rooms.find((r) => r.id === data.roomId);
+    const room = db.getRoomsByHotelId(hotel.id).find((r) => r.id === data.roomId);
 
-    // Calculate nights & price
+    if (!room) {
+      return errorResponse("ROOM_UNAVAILABLE", "Selected room is not available at this hotel", 400);
+    }
+
+    if (!room.isActive) {
+      return errorResponse("ROOM_UNAVAILABLE", "Selected room is not currently bookable", 400);
+    }
+
+    if (room.availableUnits <= 0) {
+      return errorResponse("ROOM_SOLD_OUT", "No units available for the selected room", 400);
+    }
+
+    if (data.guestsCount > room.capacity) {
+      return errorResponse(
+        "CAPACITY_EXCEEDED",
+        `This room accommodates a maximum of ${room.capacity} guests`,
+        400
+      );
+    }
+
+    // Calculate nights & price (server-computed, client values are never trusted)
     const checkIn = new Date(data.checkInDate);
     const checkOut = new Date(data.checkOutDate);
-    const diffTime = Math.max(1, Math.abs(checkOut.getTime() - checkIn.getTime()));
-    const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
-    const pricePerNight = room ? room.pricePerNight : 150;
-    const totalPrice = nights * pricePerNight;
+    const nights = Math.max(1, Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)));
+    const totalPrice = nights * room.pricePerNight;
 
     const booking = db.createBooking({
       hotelId: data.hotelId,
       roomId: data.roomId,
-      roomName: room?.name ?? "Standard Room",
+      roomName: room.name,
       guestName: data.guestName,
       guestEmail: data.guestEmail,
       guestPhone: data.guestPhone,

@@ -2,6 +2,8 @@ import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { adminCreateHotelSchema } from "@/lib/schemas/hotel";
+import { hashPassword } from "@/lib/auth/password";
+import { toPublicUser } from "@/lib/auth/session";
 
 export async function POST(req: NextRequest) {
   const secError = guardSecurity(req, "admin-hotels-write");
@@ -23,11 +25,20 @@ export async function POST(req: NextRequest) {
     // Find or create owner
     let owner = db.findUserByEmail(data.ownerEmail);
     if (!owner) {
+      if (!data.ownerPassword) {
+        return errorResponse(
+          "VALIDATION_ERROR",
+          "A password is required when provisioning a new owner account",
+          400,
+          { ownerPassword: ["Password required for new owner accounts"] }
+        );
+      }
       owner = db.createUser({
         name: data.ownerName,
         email: data.ownerEmail,
         phone: data.phone,
         role: "hotel_owner",
+        passwordHash: hashPassword(data.ownerPassword),
       });
     }
 
@@ -61,7 +72,7 @@ export async function POST(req: NextRequest) {
 
     return successResponse({
       hotel: newHotel,
-      owner,
+      owner: toPublicUser(owner),
       message: "Hotel created successfully and assigned to owner.",
     }, 201);
   } catch {

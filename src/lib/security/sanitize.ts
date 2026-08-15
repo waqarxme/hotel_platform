@@ -48,3 +48,15 @@ export function sanitizeInput(input: string): string {
   if (!input || typeof input !== "string") return "";
   return input.trim().replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
 }
+
+/**
+ * Recursively strips control characters from every string value in a record.
+ * Used as a centralized input filter before data is stored.
+ */
+export function sanitizeRecord<T extends Record<string, unknown>>(input: T): T {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(input)) {
+    out[key] = typeof value === "string" ? sanitizeInput(value) : value;
+  }
+  return out as T;
+}

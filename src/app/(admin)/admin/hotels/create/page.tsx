@@ -27,6 +27,7 @@ export default function AdminCreateHotelPage() {
     businessName: "",
     ownerName: "",
     ownerEmail: "",
+    ownerPassword: "",
     phone: "+92 300 ",
     address: "",
     city: "Islamabad",
@@ -219,6 +220,14 @@ export default function AdminCreateHotelPage() {
               required
             />
           </div>
+          <Input
+            label="Owner Account Password (new accounts only)"
+            type="password"
+            placeholder="Minimum 8 characters — used by the owner to sign in"
+            value={form.ownerPassword}
+            onChange={(e) => setForm({ ...form, ownerPassword: e.target.value })}
+            helperText="Only required if a new owner account is being provisioned for this email."
+          />
         </div>
 
         {/* Media */}

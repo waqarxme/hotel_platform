@@ -60,6 +60,7 @@ export const adminCreateHotelSchema = z.object({
   coverImageUrl: safeUrlSchema,
   amenities: z.array(z.string().max(50)).default([]),
   autoApprove: z.boolean().default(true),
+  ownerPassword: z.string().min(8, "Password must be at least 8 characters").max(100).optional(),
 });
 
 export type AdminCreateHotelInput = z.infer<typeof adminCreateHotelSchema>;

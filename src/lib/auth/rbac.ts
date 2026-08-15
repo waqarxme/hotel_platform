@@ -1,9 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "./session";
-import { User, UserRole, ApiErrorResponse, Hotel } from "@/types";
+import { User, UserRole, ApiErrorResponse, Hotel, Review } from "@/types";
 import { db } from "@/lib/db/store";
 import { validateCsrf, attachCsrfCookie, generateCsrfToken } from "@/lib/security/csrf";
 import { checkRateLimit, RateLimitOptions } from "@/lib/security/rate-limit";
+
+/**
+ * Strips sensitive owner/identity fields before a hotel is exposed to the
+ * public (CNIC scans, business licenses, admin notes, internal owner id).
+ */
+export function toPublicHotel<T extends Hotel>(hotel: T): Omit<T, "businessLicenseUrl" | "cnicUrl" | "adminNotes" | "ownerId"> {
+  const { businessLicenseUrl, cnicUrl, adminNotes, ownerId, ...publicHotel } = hotel;
+  return publicHotel as Omit<T, "businessLicenseUrl" | "cnicUrl" | "adminNotes" | "ownerId">;
+}
+
+/**
+ * Strips guest contact details before a review is shown to the public.
+ */
+export function toPublicReview<T extends Review>(review: T): Omit<T, "guestEmail"> {
+  const { guestEmail, ...publicReview } = review;
+  return publicReview as Omit<T, "guestEmail">;
+}
 
 export function errorResponse(
   code: string,

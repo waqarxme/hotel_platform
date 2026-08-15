@@ -19,6 +19,7 @@ import {
   initialReviews,
   initialNotifications,
 } from "./seed-data";
+import { sanitizeRecord, sanitizeInput } from "@/lib/security/sanitize";
 
 // Global singleton memory holder for serverless warm execution
 interface DatabaseState {
@@ -67,8 +68,9 @@ export const db = {
 
   createUser(user: Omit<User, "id" | "createdAt">): User {
     const state = getDatabase();
+    const clean = sanitizeRecord(user);
     const newUser: User = {
-      ...user,
+      ...clean,
       id: `usr-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       createdAt: new Date().toISOString(),
     };
@@ -80,7 +82,7 @@ export const db = {
     const state = getDatabase();
     const index = state.users.findIndex((u) => u.id === id);
     if (index === -1) return undefined;
-    state.users[index] = { ...state.users[index], ...updates };
+    state.users[index] = { ...state.users[index], ...sanitizeRecord(updates) };
     return state.users[index];
   },
 
@@ -108,8 +110,9 @@ export const db = {
 
   createHotel(hotelData: Omit<Hotel, "id" | "createdAt" | "updatedAt" | "isVerified" | "cleaningServiceEligible" | "eligibleFreeCleanings" | "usedFreeCleanings"> & { status?: HotelStatus }): Hotel {
     const state = getDatabase();
+    const clean = sanitizeRecord(hotelData);
     const newHotel: Hotel = {
-      ...hotelData,
+      ...clean,
       id: `htl-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       status: hotelData.status ?? "pending_approval",
       isVerified: hotelData.status === "approved" || hotelData.status === "active",
@@ -144,7 +147,7 @@ export const db = {
     const current = state.hotels[index];
     const updatedHotel: Hotel = {
       ...current,
-      ...updates,
+      ...sanitizeRecord(updates),
       updatedAt: new Date().toISOString(),
     };
     state.hotels[index] = updatedHotel;
@@ -250,8 +253,9 @@ export const db = {
 
   createRoom(roomData: Omit<Room, "id" | "createdAt">): Room {
     const state = getDatabase();
+    const clean = sanitizeRecord(roomData);
     const newRoom: Room = {
-      ...roomData,
+      ...clean,
       id: `rm-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       createdAt: new Date().toISOString(),
     };
@@ -263,7 +267,7 @@ export const db = {
     const state = getDatabase();
     const index = state.rooms.findIndex((r) => r.id === id);
     if (index === -1) return undefined;
-    state.rooms[index] = { ...state.rooms[index], ...updates };
+    state.rooms[index] = { ...state.rooms[index], ...sanitizeRecord(updates) };
     return state.rooms[index];
   },
 
@@ -288,13 +292,20 @@ export const db = {
 
   createBooking(bookingData: Omit<Booking, "id" | "createdAt" | "status"> & { status?: Booking["status"] }): Booking {
     const state = getDatabase();
+    const clean = sanitizeRecord(bookingData);
     const newBooking: Booking = {
-      ...bookingData,
+      ...clean,
       id: `bkg-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       status: bookingData.status ?? "confirmed",
       createdAt: new Date().toISOString(),
     };
     state.bookings.unshift(newBooking);
+
+    // Decrement inventory for the booked room
+    const room = state.rooms.find((r) => r.id === bookingData.roomId);
+    if (room) {
+      room.availableUnits = Math.max(0, room.availableUnits - 1);
+    }
 
     // Calculate free cleaning quota for hotel
     const hotelBookings = state.bookings.filter((b) => b.hotelId === bookingData.hotelId);
@@ -338,8 +349,9 @@ export const db = {
 
   createCleaningRequest(request: Omit<CleaningRequest, "id" | "createdAt" | "updatedAt" | "status">): CleaningRequest {
     const state = getDatabase();
+    const clean = sanitizeRecord(request);
     const newRequest: CleaningRequest = {
-      ...request,
+      ...clean,
       id: `clr-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       status: "pending",
       createdAt: new Date().toISOString(),
@@ -407,8 +419,9 @@ export const db = {
 
   createCleaningTeam(team: Omit<CleaningTeam, "id" | "activeAssignments" | "status">): CleaningTeam {
     const state = getDatabase();
+    const clean = sanitizeRecord(team);
     const newTeam: CleaningTeam = {
-      ...team,
+      ...clean,
       id: `cln-team-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       activeAssignments: 0,
       status: "available",
@@ -425,8 +438,9 @@ export const db = {
 
   createReview(review: Omit<Review, "id" | "createdAt">): Review {
     const state = getDatabase();
+    const clean = sanitizeRecord(review);
     const newReview: Review = {
-      ...review,
+      ...clean,
       id: `rev-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       createdAt: new Date().toISOString(),
     };
@@ -454,7 +468,7 @@ export const db = {
 
     state.reviews[index] = {
       ...state.reviews[index],
-      response: responseText,
+      response: sanitizeInput(responseText),
       respondedAt: new Date().toISOString(),
     };
     return state.reviews[index];
@@ -468,8 +482,9 @@ export const db = {
 
   createNotification(notif: Omit<Notification, "id" | "createdAt" | "read">): Notification {
     const state = getDatabase();
+    const clean = sanitizeRecord(notif);
     const newNotif: Notification = {
-      ...notif,
+      ...clean,
       id: `notif-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       read: false,
       createdAt: new Date().toISOString(),

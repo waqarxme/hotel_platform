@@ -42,21 +42,18 @@ export function validateCsrf(req: NextRequest): boolean {
 }
 
 function isSameOriginRequest(req: NextRequest): boolean {
-  const rawAppUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  let appUrl: URL;
-  try {
-    appUrl = new URL(rawAppUrl);
-  } catch {
-    return false;
-  }
-
+  const host = req.headers.get("host");
   const origin = req.headers.get("origin");
+
   if (origin) {
     try {
       const o = new URL(origin);
-      if (o.host !== appUrl.host) return false;
-      if (appUrl.protocol === "https:" && o.protocol !== "https:") return false;
-      return true;
+      if (host) {
+        return o.host === host;
+      }
+      // Fall back to configured app URL when Host is unavailable
+      const appUrl = new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
+      return o.host === appUrl.host;
     } catch {
       return false;
     }
@@ -66,6 +63,8 @@ function isSameOriginRequest(req: NextRequest): boolean {
   if (referer) {
     try {
       const r = new URL(referer);
+      if (host) return r.host === host;
+      const appUrl = new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
       return r.host === appUrl.host;
     } catch {
       return false;

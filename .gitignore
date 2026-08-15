@@ -19,6 +19,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# TypeScript build info
+*.tsbuildinfo
+
 # OS Files
 .DS_Store
 *.pem
@@ -28,3 +31,6 @@ Thumbs.db
 .gemini/
 .vscode/
 .idea/
+
+# Local environment variables (contains secrets)
+.env*.local

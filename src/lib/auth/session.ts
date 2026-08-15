@@ -58,6 +58,14 @@ export function createSessionCookieValue(user: User): string {
   return `${encoded}.${signPayload(encoded)}`;
 }
 
+/**
+ * Returns a user object safe to send to clients (never exposes password hashes).
+ */
+export function toPublicUser(user: User): Omit<User, "passwordHash"> {
+  const { passwordHash: _passwordHash, ...publicUser } = user;
+  return publicUser;
+}
+
 export const SESSION_COOKIE_OPTIONS = {
   name: SESSION_COOKIE_NAME,
   httpOnly: true,

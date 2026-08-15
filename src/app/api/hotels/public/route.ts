@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
-import { successResponse, errorResponse, guardSecurity } from "@/lib/auth/rbac";
+import { successResponse, errorResponse, guardSecurity, toPublicHotel } from "@/lib/auth/rbac";
 
 export async function GET(req: NextRequest) {
   const secError = guardSecurity(req, "public-hotels", { capacity: 120, refillRatePerSec: 2 });
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
       const rooms = db.getRoomsByHotelId(h.id);
       const minPrice = rooms.length > 0 ? Math.min(...rooms.map((r) => r.pricePerNight)) : 120;
       return {
-        ...h,
+        ...toPublicHotel(h),
         startingPrice: minPrice,
         roomsCount: rooms.length,
       };

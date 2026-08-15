@@ -54,28 +54,28 @@ export function AdminSidebar() {
   };
 
   return (
-    <aside className="w-60 xl:w-64 shrink-0 bg-[#080C14] border-r border-white/6 min-h-screen flex flex-col">
+    <aside className="w-60 xl:w-64 shrink-0 bg-white border-r border-slate-200 min-h-screen flex flex-col shadow-sm">
       {/* Admin Identity Block */}
-      <div className="px-4 py-5 border-b border-white/6 space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-red-500/12 border border-red-500/20">
-            <ShieldCheck className="w-4 h-4 text-red-400" />
+      <div className="px-4 py-5 border-b border-slate-100 space-y-3">
+        <div className="flex items-center gap-2.5">
+          <div className="p-1.5 rounded-lg bg-red-50 border border-red-200">
+            <ShieldCheck className="w-4 h-4 text-red-600" />
           </div>
           <div>
-            <p className="text-xs font-extrabold text-white font-heading">
-              Aura<span className="text-red-500">Hotels</span>
+            <p className="text-xs font-extrabold text-slate-900 font-heading">
+              Aura<span className="text-red-600">Hotels</span>
             </p>
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Admin Console</p>
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Admin Console</p>
           </div>
         </div>
 
         {/* Live indicator */}
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/4 border border-white/6">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200">
           <span className="relative flex h-2 w-2 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-[10px] text-slate-400 font-medium">Platform Live</span>
+          <span className="text-[10px] text-slate-500 font-medium">Platform Live</span>
           {pendingCount > 0 && (
             <span className="ml-auto text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500 text-white font-bold animate-pulse">
               {pendingCount} pending
@@ -86,7 +86,7 @@ export function AdminSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-0.5">
-        <p className="text-[9px] uppercase tracking-widest text-slate-600 font-bold px-3 pb-2">
+        <p className="text-[9px] uppercase tracking-widest text-slate-400 font-bold px-3 pb-2">
           Management
         </p>
         {navigation.map((item) => {
@@ -100,8 +100,8 @@ export function AdminSidebar() {
               className={cn(
                 "flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-150 group",
                 isActive
-                  ? "text-white font-bold shadow-lg shadow-red-500/15"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  ? "text-white font-bold shadow-md shadow-red-500/20"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               )}
               style={
                 isActive
@@ -113,7 +113,7 @@ export function AdminSidebar() {
                 <item.icon
                   className={cn(
                     "w-4 h-4 shrink-0",
-                    isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300"
+                    isActive ? "text-white" : "text-slate-400 group-hover:text-slate-600"
                   )}
                 />
                 <span>{item.name}</span>
@@ -129,9 +129,9 @@ export function AdminSidebar() {
       </nav>
 
       {/* Bottom: User info + actions */}
-      <div className="px-3 py-4 border-t border-white/6 space-y-2">
+      <div className="px-3 py-4 border-t border-slate-100 space-y-2">
         {user && (
-          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/4 border border-white/6">
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200">
             <div
               className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white shrink-0"
               style={{ background: "linear-gradient(135deg, #FF3B30, #FF9500)" }}
@@ -139,15 +139,15 @@ export function AdminSidebar() {
               {user.name.charAt(0)}
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-white truncate">{user.name}</p>
-              <p className="text-[10px] text-slate-500 font-mono truncate">{user.email}</p>
+              <p className="text-xs font-bold text-slate-900 truncate">{user.name}</p>
+              <p className="text-[10px] text-slate-400 font-mono truncate">{user.email}</p>
             </div>
           </div>
         )}
 
         <Link
           href="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-200 hover:bg-white/5 transition"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition"
         >
           <ExternalLink className="w-4 h-4" />
           <span>Public Portal</span>
@@ -155,7 +155,7 @@ export function AdminSidebar() {
 
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-red-400 hover:bg-red-500/8 transition"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 transition"
         >
           <LogOut className="w-4 h-4" />
           <span>Sign Out</span>

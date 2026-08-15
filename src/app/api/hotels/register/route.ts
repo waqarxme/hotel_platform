@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { hotelRegistrationSchema } from "@/lib/schemas/hotel";
-import { createSessionCookieValue, getCurrentUser, SESSION_COOKIE_OPTIONS } from "@/lib/auth/session";
+import { createSessionCookieValue, getCurrentUser, SESSION_COOKIE_OPTIONS, toPublicUser } from "@/lib/auth/session";
 import { errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { hashPassword } from "@/lib/auth/password";
 
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     const cookieValue = createSessionCookieValue(owner);
     const response = successResponse({
       hotel: newHotel,
-      user: owner,
+      user: toPublicUser(owner),
       message: "Hotel registration request submitted successfully. It is now awaiting admin review.",
     }, 201);
 

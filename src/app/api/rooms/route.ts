@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
+import { getCurrentUser } from "@/lib/auth/session";
 import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
-import { roomCategorySchema } from "@/lib/schemas/room";
+import { roomCategorySchema, roomUpdateSchema } from "@/lib/schemas/room";
 
 export async function GET(req: NextRequest) {
   const secError = guardSecurity(req, "rooms-read");
@@ -12,6 +13,22 @@ export async function GET(req: NextRequest) {
     const hotelId = searchParams.get("hotelId");
 
     if (hotelId) {
+      // Prevent enumeration of rooms from unapproved/suspended hotels
+      const hotel = db.findHotelById(hotelId);
+      const currentUser = await getCurrentUser();
+      const isOwner = currentUser && (currentUser.id === hotel?.ownerId || currentUser.hotelId === hotelId);
+      const isAdmin = currentUser?.role === "admin";
+
+      if (
+        !isAdmin &&
+        !isOwner &&
+        hotel &&
+        hotel.status !== "active" &&
+        hotel.status !== "approved"
+      ) {
+        return errorResponse("NOT_FOUND", "Hotel not found or unavailable", 404);
+      }
+
       const rooms = db.getRoomsByHotelId(hotelId);
       return successResponse({ rooms });
     }
@@ -90,10 +107,16 @@ export async function PUT(req: NextRequest) {
     if (authError || !auth) return authError!;
 
     const body = await req.json();
-    const { id, ...updates } = body;
+    const { id, ...rawUpdates } = body;
 
-    if (!id) {
+    if (!id || typeof id !== "string") {
       return errorResponse("VALIDATION_ERROR", "Room ID is required", 400);
+    }
+
+    // Validate every updatable field; unknown/privileged keys are stripped
+    const result = roomUpdateSchema.safeParse(rawUpdates);
+    if (!result.success) {
+      return errorResponse("VALIDATION_ERROR", "Invalid room update data", 400, result.error.flatten().fieldErrors);
     }
 
     // IDOR Protection: Locate room and verify ownership
@@ -106,7 +129,7 @@ export async function PUT(req: NextRequest) {
       return errorResponse("NOT_FOUND", "Room not found or you lack permission", 404);
     }
 
-    const updated = db.updateRoom(id, updates);
+    const updated = db.updateRoom(id, result.data);
     if (!updated) {
       return errorResponse("NOT_FOUND", "Room not found", 404);
     }

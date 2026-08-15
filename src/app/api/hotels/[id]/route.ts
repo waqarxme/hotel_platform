@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { getCurrentUser } from "@/lib/auth/session";
-import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
+import { verifyAuth, errorResponse, successResponse, guardSecurity, toPublicHotel, toPublicReview } from "@/lib/auth/rbac";
 import { updateHotelProfileSchema } from "@/lib/schemas/hotel";
 import { z } from "zod";
 
@@ -35,16 +35,23 @@ export async function GET(
 
     const rooms = db.getRoomsByHotelId(hotel.id);
     const reviews = db.getReviewsByHotelId(hotel.id);
-    const bookings = db.getBookingsByHotelId(hotel.id);
+
+    // Bookings/revenue are sensitive: only expose to owner or admin
+    const isOwnerOrAdmin = isAdmin || isOwner;
+    const bookings = isOwnerOrAdmin ? db.getBookingsByHotelId(hotel.id) : [];
 
     return successResponse({
-      hotel,
+      hotel: isOwnerOrAdmin ? hotel : toPublicHotel(hotel),
       rooms,
-      reviews,
-      stats: {
-        totalBookings: bookings.length,
-        totalRevenue: bookings.reduce((sum, b) => sum + (b.status !== "cancelled" ? b.totalPrice : 0), 0),
-      },
+      reviews: isOwnerOrAdmin ? reviews : reviews.map(toPublicReview),
+      ...(isOwnerOrAdmin
+        ? {
+            stats: {
+              totalBookings: bookings.length,
+              totalRevenue: bookings.reduce((sum, b) => sum + (b.status !== "cancelled" ? b.totalPrice : 0), 0),
+            },
+          }
+        : {}),
     });
   } catch {
     return errorResponse("INTERNAL_SERVER_ERROR", "Failed to load hotel details", 500);

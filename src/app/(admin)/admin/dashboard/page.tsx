@@ -60,18 +60,18 @@ export default function AdminDashboardPage() {
   const maxRevenue = Math.max(...data.monthlyRevenue.map((m) => m.revenue), 1000);
 
   return (
-    <div className="space-y-8 text-slate-100">
+    <div className="space-y-8 text-slate-900">
       {/* 1. Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold mb-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold mb-1">
             <Activity className="w-3.5 h-3.5" />
             <span>Master Control Plane</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white font-heading">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">
             Platform Operations &amp; Governance
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Live multi-tenant telemetry, verification queues, GMV volume, and hygiene fleet dispatches.
           </p>
         </div>

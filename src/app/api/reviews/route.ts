@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
-import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
+import { getCurrentUser } from "@/lib/auth/session";
+import { verifyAuth, errorResponse, successResponse, guardSecurity, toPublicReview } from "@/lib/auth/rbac";
 import { createReviewSchema, respondReviewSchema } from "@/lib/schemas/review";
 
 export async function GET(req: NextRequest) {
@@ -12,8 +13,24 @@ export async function GET(req: NextRequest) {
     const hotelId = searchParams.get("hotelId");
 
     if (hotelId) {
+      // Prevent enumeration of reviews from non-public hotels
+      const hotel = db.findHotelById(hotelId);
+      const currentUser = await getCurrentUser();
+      const isOwner = currentUser && (currentUser.id === hotel?.ownerId || currentUser.hotelId === hotelId);
+      const isAdmin = currentUser?.role === "admin";
+
+      if (
+        !isAdmin &&
+        !isOwner &&
+        hotel &&
+        hotel.status !== "active" &&
+        hotel.status !== "approved"
+      ) {
+        return errorResponse("NOT_FOUND", "Hotel not found or unavailable", 404);
+      }
+
       const reviews = db.getReviewsByHotelId(hotelId);
-      return successResponse({ reviews });
+      return successResponse({ reviews: reviews.map(toPublicReview) });
     }
 
     const { auth, errorResponse: authError } = await verifyAuth(["hotel_owner", "admin"]);

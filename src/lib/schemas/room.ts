@@ -12,4 +12,7 @@ export const roomCategorySchema = z.object({
   isActive: z.boolean().default(true),
 });
 
+export const roomUpdateSchema = roomCategorySchema.partial();
+
 export type RoomCategoryInput = z.infer<typeof roomCategorySchema>;
+export type RoomUpdateInput = z.infer<typeof roomUpdateSchema>;

@@ -1,9 +1,12 @@
 import { NextRequest } from "next/server";
-import { getCurrentUser } from "@/lib/auth/session";
+import { getCurrentUser, toPublicUser } from "@/lib/auth/session";
 import { db } from "@/lib/db/store";
-import { errorResponse, successResponse } from "@/lib/auth/rbac";
+import { errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const secError = guardSecurity(req, "auth-me");
+  if (secError) return secError;
+
   try {
     const user = await getCurrentUser();
     if (!user) {
@@ -22,7 +25,7 @@ export async function GET() {
     const notifications = db.getNotifications(user.id);
 
     return successResponse({
-      user,
+      user: toPublicUser(user),
       hotel,
       notifications,
     });

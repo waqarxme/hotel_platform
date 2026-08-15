@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { loginSchema } from "@/lib/schemas/auth";
-import { createSessionCookieValue, SESSION_COOKIE_OPTIONS } from "@/lib/auth/session";
+import { createSessionCookieValue, SESSION_COOKIE_OPTIONS, toPublicUser } from "@/lib/auth/session";
 import { errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { verifyPassword } from "@/lib/auth/password";
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     const cookieValue = createSessionCookieValue(user);
     const response = successResponse({
-      user,
+      user: toPublicUser(user),
       message: `Welcome back, ${user.name}!`,
     });
 
