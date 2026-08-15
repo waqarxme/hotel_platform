@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Hotel } from "@/types";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
 import {
   Search,
@@ -16,8 +15,6 @@ import {
   Calendar,
   Award,
   TrendingUp,
-  Star,
-  CheckCircle2,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -82,15 +79,15 @@ export default function HomePage() {
             alt="Luxury 5-Star Hotel Resort with Illuminated Infinity Pool"
             className="w-full h-full object-cover object-center scale-105 transform animate-in fade-in duration-1000"
           />
-          {/* Multi-Layered Scrim for High Contrast Legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/60 to-slate-950/80" />
-          <div className="absolute inset-0 bg-radial-at-c from-transparent via-black/40 to-black/70" />
+          {/* Ambient Contrast Scrim */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-slate-950/75" />
+          <div className="absolute inset-0 bg-radial-at-c from-transparent via-black/30 to-black/60" />
         </div>
 
         {/* Hero Content Overlay */}
         <div className="relative z-10 max-w-5xl mx-auto text-center space-y-8">
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/25 text-white text-xs font-bold backdrop-blur-md shadow-2xl shadow-black/40">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/15 border border-white/30 text-white text-xs font-bold backdrop-blur-md shadow-lg">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-85" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
@@ -98,7 +95,7 @@ export default function HomePage() {
             <span className="tracking-wide">Enterprise Hospitality Infrastructure & Verified Bookings</span>
           </div>
 
-          {/* Bold Cinematic Headline */}
+          {/* Bold Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white font-heading leading-[1.08] drop-shadow-2xl">
             Experience Verified Stays & <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">
@@ -107,14 +104,14 @@ export default function HomePage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-slate-200 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed font-medium drop-shadow-md">
+          <p className="text-slate-100 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed font-medium drop-shadow-md">
             Direct reservation control for premium travelers. Automated administrative onboarding, instant room availability management, and complimentary cleaning fleet dispatch for hotel partners.
           </p>
 
-          {/* Elevated Frosted Glass Search Bar */}
+          {/* Elevated Pure White Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
-            className="max-w-4xl mx-auto p-3.5 bg-white/95 rounded-2xl border border-white/40 shadow-2xl shadow-black/60 flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
+            className="max-w-4xl mx-auto p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-black/40 flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
           >
             <div className="flex-1 flex items-center gap-3 px-3 py-2 w-full border-b md:border-b-0 md:border-r border-slate-200">
               <MapPin className="w-5 h-5 text-red-600 shrink-0" />
@@ -158,7 +155,7 @@ export default function HomePage() {
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition duration-200 capitalize backdrop-blur-md ${
                   category === cat
                     ? "bg-gradient-to-r from-lava-primary to-lava-orange text-white shadow-lg shadow-red-500/40 scale-105 border border-red-400"
-                    : "bg-black/40 border border-white/20 text-white/90 hover:bg-black/60 hover:text-white"
+                    : "bg-white/90 border border-white/40 text-slate-800 hover:bg-white hover:text-slate-950"
                 }`}
               >
                 {cat}
@@ -166,23 +163,23 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* 4 Glassmorphic Stats Tickers */}
+          {/* 4 Clean Frosted White Stats Tickers */}
           <div className="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-white/20 text-center">
-            <div className="p-3 rounded-2xl bg-black/35 backdrop-blur-md border border-white/10 space-y-0.5">
-              <p className="text-2xl sm:text-3xl font-bold text-white font-heading">100%</p>
-              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Admin Verified</p>
+            <div className="p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-md space-y-0.5">
+              <p className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">100%</p>
+              <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Admin Verified</p>
             </div>
-            <div className="p-3 rounded-2xl bg-black/35 backdrop-blur-md border border-white/10 space-y-0.5">
-              <p className="text-2xl sm:text-3xl font-bold text-orange-400 font-heading">1 in 5</p>
-              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Free Cleanings Earned</p>
+            <div className="p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-md space-y-0.5">
+              <p className="text-2xl sm:text-3xl font-bold text-red-600 font-heading">1 in 5</p>
+              <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Free Cleanings</p>
             </div>
-            <div className="p-3 rounded-2xl bg-black/35 backdrop-blur-md border border-white/10 space-y-0.5">
-              <p className="text-2xl sm:text-3xl font-bold text-white font-heading">0 Sec</p>
-              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Instant Confirmation</p>
+            <div className="p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-md space-y-0.5">
+              <p className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">0 Sec</p>
+              <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Instant Booking</p>
             </div>
-            <div className="p-3 rounded-2xl bg-black/35 backdrop-blur-md border border-white/10 space-y-0.5">
-              <p className="text-2xl sm:text-3xl font-bold text-emerald-400 font-heading">24/7</p>
-              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Fleet Dispatch</p>
+            <div className="p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-md space-y-0.5">
+              <p className="text-2xl sm:text-3xl font-bold text-emerald-600 font-heading">24/7</p>
+              <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Fleet Dispatch</p>
             </div>
           </div>
         </div>
@@ -232,7 +229,7 @@ export default function HomePage() {
             {hotels.map((hotel) => (
               <div
                 key={hotel.id}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-red-500 transition-all duration-300 flex flex-col group shadow-lg hover:shadow-2xl hover:shadow-red-500/10"
+                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-red-500 transition-all duration-300 flex flex-col group shadow-md hover:shadow-xl hover:shadow-red-500/10"
               >
                 {/* Cover Image */}
                 <div className="relative h-60 w-full overflow-hidden bg-slate-100">
@@ -245,10 +242,10 @@ export default function HomePage() {
                     alt={hotel.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
                   <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/90 text-slate-900 backdrop-blur-md shadow-md">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 backdrop-blur-md shadow-md border border-slate-100">
                       {hotel.category}
                     </span>
                     {hotel.isVerified && (
@@ -259,7 +256,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white">
-                    <div className="flex items-center gap-1.5 text-xs text-white font-semibold">
+                    <div className="flex items-center gap-1.5 text-xs text-white font-semibold drop-shadow-md">
                       <MapPin className="w-3.5 h-3.5 text-red-400" />
                       <span>{hotel.city}, {hotel.country}</span>
                     </div>
@@ -293,7 +290,7 @@ export default function HomePage() {
                   <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                     <div>
                       <span className="text-[10px] text-slate-400 uppercase font-bold">Starting from</span>
-                      <p className="text-xl font-bold text-slate-900 font-mono">
+                      <p className="text-xl font-bold text-slate-950 font-mono">
                         {formatCurrency(hotel.startingPrice)}
                         <span className="text-xs text-slate-500 font-sans font-normal"> / night</span>
                       </p>
@@ -355,7 +352,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
               <div className="p-6 rounded-2xl bg-white border border-slate-200 text-center space-y-2 shadow-sm">
                 <Award className="w-8 h-8 text-red-600 mx-auto" />
-                <p className="text-3xl sm:text-4xl font-bold text-slate-900 font-heading">{freeCleaningsEarned}</p>
+                <p className="text-3xl sm:text-4xl font-bold text-slate-950 font-heading">{freeCleaningsEarned}</p>
                 <p className="text-xs text-slate-500 uppercase font-bold">Free Cleanings / Mo</p>
               </div>
 
@@ -369,18 +366,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. PARTNER ONBOARDING CTA BANNER */}
+      {/* 4. PARTNER ONBOARDING CTA BANNER (Vibrant Lava-Orange Card) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-800 text-white relative overflow-hidden shadow-2xl">
+        <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-red-600 via-orange-600 to-red-700 text-white relative overflow-hidden shadow-2xl shadow-red-600/25">
           <div className="max-w-2xl space-y-5 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-red-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-white text-xs font-bold backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-amber-200" />
               <span>Partner Onboarding Workflow</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-white font-heading leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-white font-heading leading-tight drop-shadow-sm">
               Ready to List Your Property?
             </h2>
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+            <p className="text-red-50 text-xs sm:text-sm leading-relaxed font-medium">
               Join the Cobalt hospitality ecosystem. Complete your registration in 3 simple steps, upload your license for instant verification, and unlock your dedicated property dashboard.
             </p>
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -388,13 +385,13 @@ export default function HomePage() {
                 <Button
                   variant="primary"
                   size="lg"
-                  className="bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-90 text-white font-bold shadow-xl shadow-red-500/30"
+                  className="bg-white hover:bg-slate-100 text-red-600 font-bold shadow-xl shadow-black/20"
                 >
                   Register Your Hotel (Option 2)
                 </Button>
               </Link>
               <Link href="/login">
-                <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/15 font-bold">
                   Access Portal
                 </Button>
               </Link>

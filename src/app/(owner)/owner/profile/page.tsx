@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input, TextArea, Select } from "@/components/ui/input";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { siteConfig } from "@/config/site";
-import { CheckCircle2, AlertCircle, Save, Plus, X } from "lucide-react";
+import { CheckCircle2, AlertCircle, Save, X } from "lucide-react";
 
 export default function OwnerProfilePage() {
   const [hotel, setHotel] = useState<Hotel | null>(null);
@@ -130,24 +130,24 @@ export default function OwnerProfilePage() {
   };
 
   if (isLoading) {
-    return <div className="py-20 text-center text-xs text-slate-400">Loading hotel profile...</div>;
+    return <div className="py-20 text-center text-xs text-slate-500">Loading hotel profile...</div>;
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="max-w-5xl mx-auto space-y-8 text-slate-900">
       <div>
-        <h1 className="text-2xl font-bold text-white font-heading">Hotel Profile & Media</h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <h1 className="text-2xl font-bold text-slate-950 font-heading">Hotel Profile & Media</h1>
+        <p className="text-xs text-slate-500 mt-1">
           Manage your property narrative, gallery showcase, and amenities.
         </p>
       </div>
 
       {statusMessage && (
         <div
-          className={`p-4 rounded-xl border flex items-center gap-3 text-xs ${
+          className={`p-4 rounded-2xl border flex items-center gap-3 text-xs ${
             statusMessage.type === "success"
-              ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-              : "bg-rose-500/10 border-rose-500/30 text-rose-400"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+              : "bg-rose-50 border-rose-200 text-rose-700"
           }`}
         >
           {statusMessage.type === "success" ? (
@@ -161,8 +161,8 @@ export default function OwnerProfilePage() {
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* Basic Details */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
             General Information
           </h2>
 
@@ -211,8 +211,8 @@ export default function OwnerProfilePage() {
         </div>
 
         {/* Location Coordinates */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
             Location & Map Coordinates
           </h2>
 
@@ -243,8 +243,8 @@ export default function OwnerProfilePage() {
         </div>
 
         {/* Brand Media & Gallery */}
-        <div className="glass-panel rounded-2xl p-6 space-y-6">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
             Brand Media & Photo Gallery
           </h2>
 
@@ -263,22 +263,22 @@ export default function OwnerProfilePage() {
 
           {/* Unlimited Gallery Images (Section 3) */}
           <div className="space-y-3 pt-2">
-            <label className="block text-xs font-medium text-slate-300">
-              Unlimited Hotel Photo Gallery
+            <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+              Hotel Photo Gallery
             </label>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {formData.galleryImages.map((imgUrl, index) => (
                 <div
                   key={index}
-                  className="relative h-28 rounded-xl overflow-hidden border border-cobalt-800 group"
+                  className="relative h-28 rounded-2xl overflow-hidden border border-slate-200 group bg-slate-100 shadow-xs"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={imgUrl} alt={`Gallery ${index}`} className="w-full h-full object-cover" />
                   <button
                     type="button"
                     onClick={() => handleRemoveGalleryImage(index)}
-                    className="absolute top-2 right-2 p-1 bg-rose-600/90 text-white rounded-full opacity-0 group-hover:opacity-100 transition shadow"
+                    className="absolute top-2 right-2 p-1.5 bg-rose-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition shadow-sm"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -296,8 +296,8 @@ export default function OwnerProfilePage() {
         </div>
 
         {/* Amenities */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
             Selected Hotel Amenities
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -308,13 +308,13 @@ export default function OwnerProfilePage() {
                   type="button"
                   key={amenity}
                   onClick={() => toggleAmenity(amenity)}
-                  className={`p-2.5 rounded-lg border text-xs font-medium text-left flex items-center gap-2 transition ${
+                  className={`p-3 rounded-xl border text-xs font-medium text-left flex items-center gap-2 transition ${
                     isSelected
-                      ? "bg-cobalt-500/20 border-cobalt-500 text-white"
-                      : "bg-cobalt-950/60 border-cobalt-800 text-slate-400 hover:text-slate-200"
+                      ? "bg-red-50 border-red-500 text-red-700 font-semibold"
+                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                   }`}
                 >
-                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? "text-cobalt-400" : "text-slate-600"}`} />
+                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? "text-red-600" : "text-slate-400"}`} />
                   <span>{amenity}</span>
                 </button>
               );
@@ -323,7 +323,13 @@ export default function OwnerProfilePage() {
         </div>
 
         <div className="flex items-center justify-end gap-3 pt-4">
-          <Button type="submit" variant="primary" size="lg" isLoading={isSaving} className="gap-2">
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            isLoading={isSaving}
+            className="gap-2 bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+          >
             <Save className="w-4 h-4" />
             <span>
               {hotel?.status === "rejected" ? "Save & Resubmit Application" : "Save Changes"}

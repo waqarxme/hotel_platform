@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Hotel, Room, Review } from "@/types";
+import { Hotel, Room } from "@/types";
 import { Button } from "@/components/ui/button";
 import { PulseStatusBadge } from "@/components/ui/pulse-badge";
 import { Modal } from "@/components/ui/modal";
@@ -10,22 +10,13 @@ import { Input, TextArea, Select } from "@/components/ui/input";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 import {
-  Building2,
-  MapPin,
-  FileText,
-  UserCheck,
   CheckCircle2,
   XCircle,
   AlertTriangle,
   RotateCcw,
-  Sparkles,
-  ExternalLink,
-  Phone,
-  Mail,
   ShieldCheck,
   HelpCircle,
   Edit2,
-  TrendingUp,
 } from "lucide-react";
 
 export default function AdminHotelInspectorPage() {
@@ -34,7 +25,6 @@ export default function AdminHotelInspectorPage() {
   const hotelId = params.id as string;
 
   const [hotel, setHotel] = useState<Hotel | null>(null);
-  const [rooms, setRooms] = useState<Room[]>([]);
   const [stats, setStats] = useState<{ totalBookings: number; totalRevenue: number }>({
     totalBookings: 0,
     totalRevenue: 0,
@@ -76,7 +66,6 @@ export default function AdminHotelInspectorPage() {
       if (res.ok) {
         const data = await res.json();
         setHotel(data.hotel);
-        setRooms(data.rooms || []);
         if (data.stats) setStats(data.stats);
 
         setEditFormData({
@@ -225,7 +214,7 @@ export default function AdminHotelInspectorPage() {
 
   if (isLoading) {
     return (
-      <div className="p-12 text-center text-titanium-400 text-xs">
+      <div className="p-12 text-center text-slate-500 text-xs">
         Loading property application data...
       </div>
     );
@@ -233,8 +222,8 @@ export default function AdminHotelInspectorPage() {
 
   if (!hotel) {
     return (
-      <div className="glass-panel rounded-3xl p-12 text-center space-y-4">
-        <h2 className="text-xl font-bold text-white">Application Not Found</h2>
+      <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center space-y-4 shadow-sm">
+        <h2 className="text-xl font-bold text-slate-900">Application Not Found</h2>
         <Button variant="outline" size="sm" onClick={() => router.push("/admin/hotels")}>
           Back to Queues
         </Button>
@@ -243,19 +232,19 @@ export default function AdminHotelInspectorPage() {
   }
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-8 pb-12 text-slate-900">
       {/* Header & Status Bar */}
-      <div className="glass-panel p-6 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-lava-400 font-bold">{hotel.id}</span>
+            <span className="text-xs font-mono text-red-600 font-bold">{hotel.id}</span>
             <PulseStatusBadge status={hotel.status} />
             <button
               onClick={handleToggleVerification}
               className={`inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold transition border ${
                 hotel.isVerified
-                  ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
-                  : "bg-lava-950 text-titanium-400 border-lava-800 hover:text-white"
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
               }`}
               title="Click to toggle verified badge"
             >
@@ -263,8 +252,8 @@ export default function AdminHotelInspectorPage() {
               <span>{hotel.isVerified ? "Verified Property" : "Unverified (Click to Verify)"}</span>
             </button>
           </div>
-          <h1 className="text-3xl font-bold text-white font-heading">{hotel.name}</h1>
-          <p className="text-xs text-titanium-400">{hotel.businessName} • Submitted {formatDate(hotel.createdAt)}</p>
+          <h1 className="text-3xl font-bold text-slate-950 font-heading">{hotel.name}</h1>
+          <p className="text-xs text-slate-500">{hotel.businessName} • Submitted {formatDate(hotel.createdAt)}</p>
         </div>
 
         {/* Action Buttons */}
@@ -273,7 +262,7 @@ export default function AdminHotelInspectorPage() {
             variant="outline"
             size="sm"
             onClick={() => setEditDetailsModal(true)}
-            className="gap-1.5"
+            className="gap-1.5 border-slate-200 text-slate-700 hover:bg-slate-50"
           >
             <Edit2 className="w-3.5 h-3.5" />
             <span>Edit Details</span>
@@ -285,7 +274,7 @@ export default function AdminHotelInspectorPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setRequestInfoModal(true)}
-                className="gap-1.5 text-amber-400 border-amber-500/30 hover:bg-amber-500/10"
+                className="gap-1.5 text-amber-700 border-amber-200 hover:bg-amber-50"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Request Info</span>
@@ -294,7 +283,7 @@ export default function AdminHotelInspectorPage() {
                 variant="primary"
                 size="sm"
                 onClick={() => setApproveModal(true)}
-                className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/30"
+                className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-sm"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Approve</span>
@@ -328,7 +317,7 @@ export default function AdminHotelInspectorPage() {
               variant="primary"
               size="sm"
               onClick={handleReactivate}
-              className="gap-1.5 bg-emerald-600 hover:bg-emerald-700"
+              className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reactivate Listing</span>
@@ -339,21 +328,21 @@ export default function AdminHotelInspectorPage() {
 
       {/* KPI Stats for this Property */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="glass-panel p-5 rounded-2xl">
-          <p className="text-[11px] font-bold text-titanium-400 uppercase tracking-wider">Total Rooms</p>
-          <p className="text-2xl font-bold text-white font-heading mt-1">{hotel.totalRooms}</p>
+        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Rooms</p>
+          <p className="text-2xl font-bold text-slate-950 font-heading mt-1">{hotel.totalRooms}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl">
-          <p className="text-[11px] font-bold text-titanium-400 uppercase tracking-wider">Total Bookings</p>
-          <p className="text-2xl font-bold text-white font-heading mt-1">{stats.totalBookings}</p>
+        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Bookings</p>
+          <p className="text-2xl font-bold text-slate-950 font-heading mt-1">{stats.totalBookings}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl">
-          <p className="text-[11px] font-bold text-titanium-400 uppercase tracking-wider">Gross Revenue</p>
-          <p className="text-2xl font-bold text-emerald-400 font-mono mt-1">{formatCurrency(stats.totalRevenue)}</p>
+        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Gross Revenue</p>
+          <p className="text-2xl font-bold text-emerald-600 font-mono mt-1">{formatCurrency(stats.totalRevenue)}</p>
         </div>
-        <div className="glass-panel p-5 rounded-2xl">
-          <p className="text-[11px] font-bold text-titanium-400 uppercase tracking-wider">Free Cleanings</p>
-          <p className="text-2xl font-bold text-lava-400 font-heading mt-1">
+        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Free Cleanings</p>
+          <p className="text-2xl font-bold text-red-600 font-heading mt-1">
             {hotel.usedFreeCleanings} / {hotel.eligibleFreeCleanings}
           </p>
         </div>
@@ -363,44 +352,44 @@ export default function AdminHotelInspectorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left 2 Cols: Details */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl space-y-6">
-            <h3 className="text-base font-bold text-white font-heading border-b border-lava-800 pb-3">
+          <div className="bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl space-y-6 shadow-sm">
+            <h3 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
               Application Details & Overview
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="p-3.5 rounded-xl bg-lava-950 border border-lava-800 space-y-1">
-                <span className="text-[10px] text-titanium-400 uppercase font-semibold">Contact Email</span>
-                <p className="text-white font-medium">{hotel.email}</p>
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <span className="text-[10px] text-slate-400 uppercase font-semibold">Contact Email</span>
+                <p className="text-slate-900 font-mono">{hotel.email}</p>
               </div>
-              <div className="p-3.5 rounded-xl bg-lava-950 border border-lava-800 space-y-1">
-                <span className="text-[10px] text-titanium-400 uppercase font-semibold">Phone Number</span>
-                <p className="text-white font-medium">{hotel.phone}</p>
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <span className="text-[10px] text-slate-400 uppercase font-semibold">Phone Number</span>
+                <p className="text-slate-900 font-mono">{hotel.phone}</p>
               </div>
-              <div className="p-3.5 rounded-xl bg-lava-950 border border-lava-800 space-y-1 sm:col-span-2">
-                <span className="text-[10px] text-titanium-400 uppercase font-semibold">Physical Address</span>
-                <p className="text-white font-medium">{hotel.address}, {hotel.city}, {hotel.country}</p>
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1 sm:col-span-2">
+                <span className="text-[10px] text-slate-400 uppercase font-semibold">Physical Address</span>
+                <p className="text-slate-900 font-medium">{hotel.address}, {hotel.city}, {hotel.country}</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-xs font-bold text-titanium-300 uppercase tracking-wider">Narrative Description</h4>
-              <p className="text-xs text-titanium-200 leading-relaxed bg-lava-950 p-4 rounded-xl border border-lava-800 whitespace-pre-line">
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Narrative Description</h4>
+              <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200 whitespace-pre-line">
                 {hotel.description}
               </p>
             </div>
 
             {hotel.adminNotes && (
-              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
-                <h4 className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Admin Notes & Remarks</h4>
-                <p className="text-xs text-titanium-200">{hotel.adminNotes}</p>
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-1">
+                <h4 className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">Admin Notes & Remarks</h4>
+                <p className="text-xs text-slate-700">{hotel.adminNotes}</p>
               </div>
             )}
 
             {hotel.rejectionReason && (
-              <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 space-y-1">
-                <h4 className="text-[11px] font-bold text-rose-400 uppercase tracking-wider">Rejection Reason Provided</h4>
-                <p className="text-xs text-rose-200">{hotel.rejectionReason}</p>
+              <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
+                <h4 className="text-[11px] font-bold text-rose-800 uppercase tracking-wider">Rejection Reason Provided</h4>
+                <p className="text-xs text-rose-700">{hotel.rejectionReason}</p>
               </div>
             )}
           </div>
@@ -408,40 +397,40 @@ export default function AdminHotelInspectorPage() {
 
         {/* Right Col: Documents & Media Inspector */}
         <div className="space-y-6">
-          <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <h3 className="text-sm font-bold text-white font-heading border-b border-lava-800 pb-2">
+          <div className="bg-white border border-slate-200 p-6 rounded-3xl space-y-4 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-950 font-heading border-b border-slate-100 pb-2">
               Submitted Documents & Scans
             </h3>
 
             <div className="space-y-3">
-              <div className="p-4 rounded-2xl bg-lava-950 border border-lava-800 space-y-2">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-white">Business License / Tax Reg</span>
+                  <span className="font-semibold text-slate-900">Business License / Tax Reg</span>
                   {hotel.businessLicenseUrl ? (
-                    <span className="text-[10px] font-bold text-emerald-400">Attached</span>
+                    <span className="text-[10px] font-bold text-emerald-700">Attached</span>
                   ) : (
-                    <span className="text-[10px] text-titanium-500">Not provided</span>
+                    <span className="text-[10px] text-slate-400">Not provided</span>
                   )}
                 </div>
                 {hotel.businessLicenseUrl && (
-                  <div className="relative h-32 rounded-xl overflow-hidden bg-lava-900 border border-lava-800">
+                  <div className="relative h-32 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={hotel.businessLicenseUrl} alt="License" className="w-full h-full object-cover" />
                   </div>
                 )}
               </div>
 
-              <div className="p-4 rounded-2xl bg-lava-950 border border-lava-800 space-y-2">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-white">CNIC / Passport Identity Scan</span>
+                  <span className="font-semibold text-slate-900">CNIC / Passport Identity Scan</span>
                   {hotel.cnicUrl ? (
-                    <span className="text-[10px] font-bold text-emerald-400">Attached</span>
+                    <span className="text-[10px] font-bold text-emerald-700">Attached</span>
                   ) : (
-                    <span className="text-[10px] text-titanium-500">Not provided</span>
+                    <span className="text-[10px] text-slate-400">Not provided</span>
                   )}
                 </div>
                 {hotel.cnicUrl && (
-                  <div className="relative h-32 rounded-xl overflow-hidden bg-lava-900 border border-lava-800">
+                  <div className="relative h-32 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={hotel.cnicUrl} alt="CNIC" className="w-full h-full object-cover" />
                   </div>
@@ -471,11 +460,12 @@ export default function AdminHotelInspectorPage() {
               Cancel
             </Button>
             <Button
+              type="button"
               variant="primary"
               size="sm"
               onClick={handleApprove}
               isLoading={isProcessing}
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
             >
               Confirm & Approve Hotel
             </Button>
@@ -504,6 +494,7 @@ export default function AdminHotelInspectorPage() {
               Cancel
             </Button>
             <Button
+              type="button"
               variant="danger"
               size="sm"
               onClick={handleReject}
@@ -537,11 +528,13 @@ export default function AdminHotelInspectorPage() {
               Cancel
             </Button>
             <Button
+              type="button"
               variant="primary"
               size="sm"
               onClick={handleRequestInfo}
               isLoading={isProcessing}
               disabled={!infoRequestMessage}
+              className="bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
             >
               Send Request to Owner
             </Button>
@@ -570,6 +563,7 @@ export default function AdminHotelInspectorPage() {
               Cancel
             </Button>
             <Button
+              type="button"
               variant="danger"
               size="sm"
               onClick={handleSuspend}
@@ -643,7 +637,7 @@ export default function AdminHotelInspectorPage() {
             <Button type="button" variant="outline" size="sm" onClick={() => setEditDetailsModal(false)}>
               Cancel
             </Button>
-            <Button type="submit" variant="primary" size="sm" isLoading={isProcessing}>
+            <Button type="submit" variant="primary" size="sm" isLoading={isProcessing} className="bg-slate-900 text-white">
               Save Hotel Details
             </Button>
           </div>

@@ -16,13 +16,13 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variants = {
-    default: "bg-lava-900 text-titanium-200 border-lava-800",
-    lava: "bg-lava-500/15 text-lava-400 border-lava-500/40 shadow-sm shadow-lava-500/10 font-bold",
-    success: "bg-emerald-500/15 text-emerald-400 border-emerald-500/40",
-    warning: "bg-amber-500/15 text-amber-400 border-amber-500/40",
-    danger: "bg-rose-500/15 text-rose-400 border-rose-500/40",
-    info: "bg-lava-500/15 text-lava-400 border-lava-500/40",
-    purple: "bg-purple-500/15 text-purple-400 border-purple-500/40",
+    default: "bg-slate-100 text-slate-700 border-slate-200",
+    lava: "bg-red-50 text-red-700 border-red-200 font-bold",
+    success: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    warning: "bg-amber-50 text-amber-800 border-amber-200",
+    danger: "bg-rose-50 text-rose-700 border-rose-200",
+    info: "bg-red-50 text-red-700 border-red-200",
+    purple: "bg-purple-50 text-purple-700 border-purple-200",
   };
 
   const sizes = {
@@ -54,17 +54,17 @@ export function PulseStatusBadge({ status, className }: PulseStatusBadgeProps) {
   const { label, bgClass, textClass, borderClass, pulseColor } = getStatusBadgeVariant(status);
 
   const dotColors = {
-    emerald: "bg-emerald-400 shadow-[0_0_10px_#1FAE7A]",
-    amber: "bg-amber-400 shadow-[0_0_10px_#F59E0B]",
-    crimson: "bg-lava-500 shadow-[0_0_12px_#FF3B30]",
-    cobalt: "bg-lava-400 shadow-[0_0_10px_#FF5A4F]",
-    gray: "bg-slate-400 shadow-[0_0_8px_#94A3B8]",
+    emerald: "bg-emerald-500",
+    amber: "bg-amber-500",
+    crimson: "bg-rose-500",
+    cobalt: "bg-red-500",
+    gray: "bg-slate-400",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border backdrop-blur-md",
+        "inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border backdrop-blur-md shadow-2xs",
         bgClass,
         textClass,
         borderClass,

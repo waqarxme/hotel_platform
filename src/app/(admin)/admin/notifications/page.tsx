@@ -5,7 +5,6 @@ import { Hotel } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input, TextArea, Select } from "@/components/ui/input";
 import {
-  Bell,
   Send,
   CheckCircle2,
   AlertCircle,
@@ -73,38 +72,38 @@ export default function AdminNotificationsPage() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8 text-slate-900">
       <div>
-        <h1 className="text-2xl font-bold text-white font-heading">
+        <h1 className="text-2xl font-bold text-slate-950 font-heading">
           Owner Broadcast & Notification Dispatcher
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 mt-1">
           Send announcements, verification updates, or compliance reminders directly to hotel owners.
         </p>
       </div>
 
       {successMessage && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3 text-emerald-400 text-xs">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-3 text-emerald-700 text-xs">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{successMessage}</span>
         </div>
       )}
 
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-3 text-rose-400 text-xs">
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-center gap-3 text-rose-700 text-xs">
           <AlertCircle className="w-5 h-5 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
-      <div className="glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
-        <div className="flex items-center gap-3 border-b border-cobalt-800 pb-4">
-          <div className="p-2.5 rounded-xl bg-cobalt-500/10 text-cobalt-400">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 border border-slate-200 shadow-sm">
+        <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
+          <div className="p-2.5 rounded-2xl bg-red-50 text-red-600 border border-red-200">
             <Megaphone className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-white font-heading">Compose Notification Message</h2>
-            <p className="text-xs text-slate-400">Targets in-app dashboards and owner alert centers</p>
+            <h2 className="text-base font-bold text-slate-950 font-heading">Compose Notification Message</h2>
+            <p className="text-xs text-slate-500">Targets in-app dashboards and owner alert centers</p>
           </div>
         </div>
 
@@ -152,8 +151,14 @@ export default function AdminNotificationsPage() {
             required
           />
 
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-cobalt-800">
-            <Button type="submit" variant="primary" size="md" isLoading={isSubmitting} className="gap-2">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+              isLoading={isSubmitting}
+              className="gap-2 bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+            >
               <Send className="w-4 h-4" />
               <span>Dispatch Notification</span>
             </Button>

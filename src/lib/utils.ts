@@ -40,42 +40,42 @@ export function getStatusBadgeVariant(status: HotelStatus): {
     case "active":
       return {
         label: "Approved & Active",
-        bgClass: "bg-emerald-500/10",
-        textClass: "text-emerald-400",
-        borderClass: "border-emerald-500/30",
+        bgClass: "bg-emerald-50",
+        textClass: "text-emerald-700",
+        borderClass: "border-emerald-200",
         pulseColor: "emerald",
       };
     case "pending_approval":
       return {
         label: "Pending Approval",
-        bgClass: "bg-amber-500/10",
-        textClass: "text-amber-400",
-        borderClass: "border-amber-500/30",
+        bgClass: "bg-amber-50",
+        textClass: "text-amber-800",
+        borderClass: "border-amber-200",
         pulseColor: "amber",
       };
     case "rejected":
       return {
         label: "Rejected",
-        bgClass: "bg-rose-500/10",
-        textClass: "text-rose-400",
-        borderClass: "border-rose-500/30",
+        bgClass: "bg-rose-50",
+        textClass: "text-rose-700",
+        borderClass: "border-rose-200",
         pulseColor: "crimson",
       };
     case "suspended":
       return {
         label: "Suspended",
-        bgClass: "bg-rose-500/15",
-        textClass: "text-rose-300",
-        borderClass: "border-rose-500/40",
+        bgClass: "bg-rose-50",
+        textClass: "text-rose-700",
+        borderClass: "border-rose-200",
         pulseColor: "crimson",
       };
     case "draft":
     default:
       return {
         label: "Draft",
-        bgClass: "bg-slate-500/10",
-        textClass: "text-slate-400",
-        borderClass: "border-slate-500/30",
+        bgClass: "bg-slate-100",
+        textClass: "text-slate-600",
+        borderClass: "border-slate-200",
         pulseColor: "gray",
       };
   }

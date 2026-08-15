@@ -14,7 +14,6 @@ import {
   CheckCircle2,
   ArrowLeft,
   AlertCircle,
-  Sparkles,
 } from "lucide-react";
 
 export default function AdminCreateHotelPage() {
@@ -71,39 +70,39 @@ export default function AdminCreateHotelPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8 text-slate-900">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <Link
           href="/admin/hotels"
-          className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white transition"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-950 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Hotel Queues</span>
         </Link>
-        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-cobalt-500/10 text-cobalt-400 border border-cobalt-500/30">
+        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
           Option 1 Onboarding Pathway
         </span>
       </div>
 
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold text-white font-heading">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">
           Admin Direct Hotel Profile Creation
         </h1>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-slate-500">
           Option 1: Directly create a hotel profile and assign it to an existing or new hotel owner account.
         </p>
       </div>
 
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-3 text-rose-400 text-xs">
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-center gap-3 text-rose-700 text-xs">
           <AlertCircle className="w-5 h-5 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {successMessage && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3 text-emerald-400 text-xs">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-3 text-emerald-700 text-xs">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{successMessage}</span>
         </div>
@@ -111,9 +110,9 @@ export default function AdminCreateHotelPage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Hotel Details */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2 flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-cobalt-400" />
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3 flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-red-600" />
             <span>Property Information</span>
           </h2>
 
@@ -166,8 +165,8 @@ export default function AdminCreateHotelPage() {
         </div>
 
         {/* Location */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
             Location Address
           </h2>
           <Input
@@ -194,12 +193,12 @@ export default function AdminCreateHotelPage() {
         </div>
 
         {/* Owner Account Assignment (Section 1) */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4 border-l-4 border-l-cobalt-500">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2 flex items-center gap-2">
-            <UserCheck className="w-4 h-4 text-cobalt-400" />
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border-l-4 border-l-red-600 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3 flex items-center gap-2">
+            <UserCheck className="w-4 h-4 text-red-600" />
             <span>Assigned Hotel Owner Account</span>
           </h2>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-slate-600">
             If the email is already registered, the hotel is linked to that account. Otherwise, a new hotel owner account is automatically provisioned.
           </p>
 
@@ -223,8 +222,8 @@ export default function AdminCreateHotelPage() {
         </div>
 
         {/* Media */}
-        <div className="glass-panel rounded-2xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white font-heading border-b border-cobalt-800 pb-2">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-4 border border-slate-200 shadow-sm">
+          <h2 className="text-base font-bold text-slate-950 font-heading border-b border-slate-100 pb-3">
             Visual Brand Assets (Optional)
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -243,11 +242,17 @@ export default function AdminCreateHotelPage() {
 
         <div className="flex items-center justify-end gap-3 pt-4">
           <Link href="/admin/hotels">
-            <Button type="button" variant="outline" size="md">
+            <Button type="button" variant="outline" size="md" className="border-slate-200 text-slate-700">
               Cancel
             </Button>
           </Link>
-          <Button type="submit" variant="primary" size="lg" isLoading={isSubmitting} className="gap-2">
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            isLoading={isSubmitting}
+            className="gap-2 bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+          >
             <PlusCircle className="w-4 h-4" />
             <span>Create & Activate Hotel Profile</span>
           </Button>

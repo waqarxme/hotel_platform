@@ -102,34 +102,34 @@ export function ImageUpload({
     <div className={cn("space-y-1.5", className)}>
       {label && (
         <div className="flex items-center justify-between">
-          <label className="block text-xs font-semibold text-titanium-200 uppercase tracking-wider">
+          <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
             {label}
           </label>
           {optimizedSize && (
-            <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-mono font-bold">
-              <Sparkles className="w-3 h-3 text-emerald-400" /> {optimizedSize}
+            <span className="inline-flex items-center gap-1 text-[10px] text-emerald-600 font-mono font-bold">
+              <Sparkles className="w-3 h-3 text-emerald-600" /> {optimizedSize}
             </span>
           )}
         </div>
       )}
 
       {value ? (
-        <div className="relative rounded-2xl overflow-hidden border border-lava-700/80 group bg-lava-950 p-2 shadow-lg">
+        <div className="relative rounded-2xl overflow-hidden border border-slate-200 group bg-white p-2 shadow-sm">
           {isDocument || value.endsWith(".pdf") || value.startsWith("data:application/pdf") ? (
-            <div className="flex items-center gap-3 p-4 bg-lava-900 rounded-xl">
-              <FileText className="w-8 h-8 text-lava-400 shrink-0" />
+            <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <FileText className="w-8 h-8 text-red-600 shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-white truncate">Verification Document Attached</p>
-                <p className="text-[10px] text-emerald-400 font-semibold mt-0.5 flex items-center gap-1">
+                <p className="text-xs font-semibold text-slate-900 truncate">Verification Document Attached</p>
+                <p className="text-[10px] text-emerald-700 font-semibold mt-0.5 flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3" /> Secure Storage File Ready
                 </p>
               </div>
             </div>
           ) : (
-            <div className="relative h-44 w-full rounded-xl overflow-hidden bg-lava-900">
+            <div className="relative h-44 w-full rounded-xl overflow-hidden bg-slate-100">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={value} alt="Upload preview" className="w-full h-full object-cover" />
-              <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-lava-950/80 backdrop-blur-md border border-lava-800 text-[10px] font-mono text-lava-300">
+              <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-white/90 backdrop-blur-md border border-slate-200 text-[10px] font-mono text-slate-900 font-semibold shadow-xs">
                 WebP Optimized
               </div>
             </div>
@@ -138,14 +138,14 @@ export function ImageUpload({
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute top-3.5 right-3.5 p-1.5 bg-rose-600/90 hover:bg-rose-700 text-white rounded-full transition shadow-lg z-10"
+            className="absolute top-3.5 right-3.5 p-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full transition shadow-md z-10"
             title="Delete and remove image from storage"
           >
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
       ) : (
-        <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-lava-800 hover:border-lava-500 rounded-2xl cursor-pointer bg-lava-950/60 hover:bg-lava-900/50 transition duration-200 group">
+        <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-200 hover:border-red-500 rounded-2xl cursor-pointer bg-slate-50/70 hover:bg-red-50/20 transition duration-200 group">
           <input
             type="file"
             accept={accept}
@@ -153,7 +153,7 @@ export function ImageUpload({
             disabled={isUploading}
             className="hidden"
           />
-          <div className="p-3 rounded-full bg-lava-900 border border-lava-800 text-lava-400 group-hover:text-white group-hover:bg-lava-500 group-hover:scale-110 transition duration-200 shadow-md">
+          <div className="p-3 rounded-full bg-white border border-slate-200 text-red-600 group-hover:text-white group-hover:bg-gradient-to-r group-hover:from-lava-primary group-hover:to-lava-orange group-hover:scale-110 transition duration-200 shadow-sm">
             {isUploading ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : isDocument ? (
@@ -162,10 +162,10 @@ export function ImageUpload({
               <UploadCloud className="w-5 h-5" />
             )}
           </div>
-          <p className="text-xs font-bold text-white mt-3 group-hover:text-lava-300 transition">
+          <p className="text-xs font-bold text-slate-900 mt-3 group-hover:text-red-600 transition">
             {isUploading ? "Compressing to WebP & Uploading..." : "Click to upload image or document"}
           </p>
-          <p className="text-[11px] text-titanium-400 mt-1 text-center">
+          <p className="text-[11px] text-slate-500 mt-1 text-center">
             {helperText || "Auto-compressed & converted to WebP on upload"}
           </p>
         </label>

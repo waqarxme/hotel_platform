@@ -11,21 +11,21 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-lava-950 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]";
+      "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]";
 
     const variants = {
       primary:
-        "bg-lava-500 hover:bg-lava-600 text-white shadow-lg shadow-lava-500/25 hover:shadow-lava-500/40 focus:ring-lava-400 border border-lava-400/40 font-semibold",
+        "bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white shadow-md shadow-red-500/20 focus:ring-red-500 font-bold",
       secondary:
-        "bg-lava-900 hover:bg-lava-850 text-white border border-lava-800 focus:ring-lava-500/40",
+        "bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 focus:ring-slate-300 font-semibold",
       danger:
-        "bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/25 focus:ring-rose-500 border border-rose-500/30",
+        "bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-600/20 focus:ring-rose-500 font-bold",
       success:
-        "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25 focus:ring-emerald-500 border border-emerald-500/30",
+        "bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20 focus:ring-emerald-500 font-bold",
       outline:
-        "bg-transparent hover:bg-lava-900 text-titanium-200 border border-lava-800 hover:border-lava-600 focus:ring-lava-500/30",
+        "bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 hover:border-slate-300 hover:text-slate-950 focus:ring-slate-300 font-semibold shadow-xs",
       ghost:
-        "bg-transparent hover:bg-lava-900/80 text-titanium-400 hover:text-white focus:ring-lava-500/20",
+        "bg-transparent hover:bg-slate-100 text-slate-600 hover:text-slate-950 focus:ring-slate-200 font-semibold",
     };
 
     const sizes = {

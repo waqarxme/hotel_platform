@@ -7,7 +7,6 @@ import { Input, TextArea, Select } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { formatCurrency } from "@/lib/utils";
-import { siteConfig } from "@/config/site";
 import {
   BedDouble,
   Plus,
@@ -15,7 +14,6 @@ import {
   Edit2,
   Users,
   CheckCircle2,
-  Sparkles,
   AlertCircle,
 } from "lucide-react";
 
@@ -151,28 +149,33 @@ export default function OwnerRoomsPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-slate-900">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lava-500/15 border border-lava-500/30 text-lava-400 text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold mb-2">
             <BedDouble className="w-3.5 h-3.5" />
             <span>Room Category & Inventory Management</span>
           </div>
-          <h1 className="text-3xl font-bold text-white font-heading">Rooms & Pricing</h1>
-          <p className="text-xs text-titanium-400 mt-1">
+          <h1 className="text-3xl font-bold text-slate-950 font-heading">Rooms & Pricing</h1>
+          <p className="text-xs text-slate-500 mt-1">
             Configure room types, night rates, bed capacities, amenities, and available inventory.
           </p>
         </div>
 
-        <Button variant="primary" size="md" onClick={openCreateModal} className="gap-2 shrink-0">
+        <Button
+          variant="primary"
+          size="md"
+          onClick={openCreateModal}
+          className="gap-2 shrink-0 bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white font-bold shadow-md shadow-red-500/20"
+        >
           <Plus className="w-4 h-4" />
           <span>Add Room Category</span>
         </Button>
       </div>
 
       {errorMessage && (
-        <div className="p-4 rounded-2xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2.5">
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMessage}</span>
         </div>
@@ -182,17 +185,17 @@ export default function OwnerRoomsPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-72 rounded-2xl bg-lava-900/50 border border-lava-800 animate-pulse" />
+            <div key={i} className="h-72 rounded-2xl bg-slate-100 border border-slate-200 animate-pulse" />
           ))}
         </div>
       ) : rooms.length === 0 ? (
-        <div className="glass-panel rounded-3xl p-12 text-center space-y-4">
-          <BedDouble className="w-12 h-12 text-titanium-500 mx-auto" />
-          <h3 className="text-lg font-bold text-white font-heading">No Room Categories Yet</h3>
-          <p className="text-xs text-titanium-400 max-w-sm mx-auto">
+        <div className="bg-white rounded-3xl p-12 text-center space-y-4 border border-slate-200 shadow-sm">
+          <BedDouble className="w-12 h-12 text-slate-400 mx-auto" />
+          <h3 className="text-lg font-bold text-slate-900 font-heading">No Room Categories Yet</h3>
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
             Add room categories to publish them on the public portal and start accepting reservations.
           </p>
-          <Button variant="primary" size="sm" onClick={openCreateModal}>
+          <Button variant="primary" size="sm" onClick={openCreateModal} className="bg-slate-900 text-white">
             Add First Room
           </Button>
         </div>
@@ -201,17 +204,17 @@ export default function OwnerRoomsPage() {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className="glass-card rounded-2xl overflow-hidden border border-lava-800 flex flex-col justify-between group"
+              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
             >
               {room.photos && room.photos.length > 0 && (
-                <div className="relative h-44 w-full bg-lava-950 overflow-hidden">
+                <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={room.photos[0]}
                     alt={room.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-lava-950/90 text-lava-400 border border-lava-800">
+                  <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-white/95 text-slate-900 border border-slate-200 shadow-xs">
                     {room.type}
                   </div>
                 </div>
@@ -220,47 +223,47 @@ export default function OwnerRoomsPage() {
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <div className="flex items-center justify-between">
-                    <h3 className="text-base font-bold text-white font-heading">{room.name}</h3>
-                    <span className="flex items-center gap-1 text-xs text-titanium-300 font-semibold">
-                      <Users className="w-3.5 h-3.5 text-lava-400" /> Max {room.capacity}
+                    <h3 className="text-base font-bold text-slate-950 font-heading">{room.name}</h3>
+                    <span className="flex items-center gap-1 text-xs text-slate-600 font-semibold">
+                      <Users className="w-3.5 h-3.5 text-red-600" /> Max {room.capacity}
                     </span>
                   </div>
-                  <p className="text-xs text-titanium-400 mt-2 line-clamp-2">{room.description}</p>
+                  <p className="text-xs text-slate-600 mt-2 line-clamp-2">{room.description}</p>
 
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {room.amenities.slice(0, 3).map((a) => (
                       <span
                         key={a}
-                        className="px-2 py-0.5 rounded bg-lava-950 border border-lava-800 text-[10px] text-titanium-300"
+                        className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] text-slate-700"
                       >
                         {a}
                       </span>
                     ))}
                     {room.amenities.length > 3 && (
-                      <span className="px-2 py-0.5 rounded bg-lava-950 border border-lava-800 text-[10px] text-titanium-500">
+                      <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-[10px] text-slate-500">
                         +{room.amenities.length - 3}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-lava-800 flex items-center justify-between">
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-titanium-400 uppercase font-semibold">Price per night</span>
-                    <p className="text-lg font-bold text-white font-mono">{formatCurrency(room.pricePerNight)}</p>
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold">Price per night</span>
+                    <p className="text-lg font-bold text-slate-950 font-mono">{formatCurrency(room.pricePerNight)}</p>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => openEditModal(room)}
-                      className="p-2 rounded-xl bg-lava-900 border border-lava-800 hover:border-lava-500 text-titanium-300 hover:text-white transition"
+                      className="p-2 rounded-xl bg-slate-100 border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-950 transition"
                       title="Edit Room Category"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(room.id)}
-                      className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white transition"
+                      className="p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100 transition"
                       title="Delete Room Category"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -347,7 +350,7 @@ export default function OwnerRoomsPage() {
           />
 
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-titanium-200 uppercase tracking-wider">
+            <label className="block text-xs font-bold text-slate-900 uppercase tracking-wider">
               Room Amenities
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
@@ -361,12 +364,12 @@ export default function OwnerRoomsPage() {
                       onClick={() => toggleAmenity(amenity)}
                       className={`p-2 rounded-lg border text-xs font-medium text-left flex items-center gap-1.5 transition ${
                         isSelected
-                          ? "bg-lava-500/20 border-lava-500 text-white font-semibold"
-                          : "bg-lava-950 border-lava-800 text-titanium-400"
+                          ? "bg-red-50 border-red-500 text-red-700 font-semibold"
+                          : "bg-slate-50 border-slate-200 text-slate-600"
                       }`}
                     >
                       <CheckCircle2
-                        className={`w-3.5 h-3.5 ${isSelected ? "text-lava-400" : "text-titanium-500"}`}
+                        className={`w-3.5 h-3.5 ${isSelected ? "text-red-600" : "text-slate-400"}`}
                       />
                       <span className="truncate">{amenity}</span>
                     </button>
@@ -376,11 +379,17 @@ export default function OwnerRoomsPage() {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-lava-800 flex items-center justify-end gap-2">
+          <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
             <Button type="button" variant="outline" size="sm" onClick={() => setModalOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" variant="primary" size="sm" isLoading={isSaving}>
+            <Button
+              type="submit"
+              variant="primary"
+              size="sm"
+              isLoading={isSaving}
+              className="bg-gradient-to-r from-lava-primary to-lava-orange text-white font-bold"
+            >
               {editingRoomId ? "Save Changes" : "Create Room Category"}
             </Button>
           </div>

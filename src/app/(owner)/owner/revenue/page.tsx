@@ -8,9 +8,6 @@ import {
   TrendingUp,
   CalendarCheck,
   Percent,
-  BedDouble,
-  BarChart3,
-  Sparkles,
 } from "lucide-react";
 
 interface OwnerRevenueData {
@@ -39,8 +36,8 @@ export default function OwnerRevenuePage() {
   if (isLoading || !analytics) {
     return (
       <div className="py-24 text-center space-y-3">
-        <div className="w-8 h-8 border-2 border-lava-500 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs text-titanium-400 font-mono">Compiling property revenue analytics...</p>
+        <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-xs text-slate-500 font-mono">Compiling property revenue analytics...</p>
       </div>
     );
   }
@@ -52,12 +49,12 @@ export default function OwnerRevenuePage() {
       : 240;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-slate-900">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white font-heading">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">
           Revenue & Financial Yield
         </h1>
-        <p className="text-xs text-titanium-400 mt-1">
+        <p className="text-xs text-slate-500 mt-1">
           Financial performance reporting, occupancy yield, and daily room billing telemetry.
         </p>
       </div>
@@ -96,31 +93,31 @@ export default function OwnerRevenuePage() {
       </div>
 
       {/* Daily / Weekly Revenue Visual Chart */}
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 border border-lava-800">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 border border-slate-200 shadow-sm">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-white font-heading">7-Day Daily Revenue Trajectory</h2>
-            <p className="text-xs text-titanium-400 mt-1">Direct guest reservation billings</p>
+            <h2 className="text-base font-bold text-slate-950 font-heading">7-Day Daily Revenue Trajectory</h2>
+            <p className="text-xs text-slate-500 mt-1">Direct guest reservation billings</p>
           </div>
-          <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/30">
+          <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
             USD ($)
           </span>
         </div>
 
         {/* Bar Chart */}
-        <div className="pt-8 pb-4 flex items-end justify-between gap-3 sm:gap-4 h-64 border-b border-lava-800">
+        <div className="pt-8 pb-4 flex items-end justify-between gap-3 sm:gap-4 h-64 border-b border-slate-100">
           {analytics.revenueTrend.map((item) => {
             const heightPercent = Math.max(15, Math.round((item.revenue / maxDaily) * 100));
             return (
               <div key={item.day} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                <div className="text-[10px] font-mono text-titanium-400 opacity-0 group-hover:opacity-100 transition">
+                <div className="text-[10px] font-mono text-slate-400 opacity-0 group-hover:opacity-100 transition">
                   ${item.revenue}
                 </div>
                 <div
-                  className="w-full max-w-[48px] rounded-t-xl bg-gradient-to-t from-lava-600 to-lava-400 group-hover:from-lava-500 group-hover:to-lava-300 transition-all duration-300 relative shadow-lg shadow-lava-500/20"
+                  className="w-full max-w-[48px] rounded-t-xl bg-gradient-to-t from-lava-primary to-lava-orange transition-all duration-300 relative shadow-sm shadow-red-500/20"
                   style={{ height: `${heightPercent}%` }}
                 />
-                <span className="text-[11px] font-semibold text-titanium-300 group-hover:text-white mt-1">
+                <span className="text-[11px] font-semibold text-slate-600 group-hover:text-slate-950 mt-1">
                   {item.day}
                 </span>
               </div>
