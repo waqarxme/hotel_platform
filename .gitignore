@@ -1,0 +1,30 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Next.js build output
+/.next/
+/out/
+/build
+
+# Scratch and temporary scripts
+/scratch/
+*.mjs
+*.ms
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS Files
+.DS_Store
+*.pem
+Thumbs.db
+
+# IDE & Agents
+.gemini/
+.vscode/
+.idea/
