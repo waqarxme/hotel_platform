@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { User, Hotel, Notification } from "@/types";
 import {
-  Hotel as HotelIcon,
   ShieldCheck,
   Building2,
   LogOut,
@@ -85,47 +84,52 @@ export function Navbar() {
 
   return (
     <div className="sticky top-3 z-50 w-full px-3 sm:px-6 lg:px-8">
-      {/* Floating Pill Container */}
-      <header className="max-w-6xl mx-auto rounded-full bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-xl shadow-slate-900/5 px-4 sm:px-6 py-2.5 transition-all duration-300">
+      {/* Floating Pill Header Container */}
+      <header className="max-w-6xl mx-auto rounded-full bg-white/95 backdrop-blur-2xl border border-slate-300 shadow-xl shadow-slate-900/10 px-4 sm:px-6 py-2.5 transition-all duration-300">
         <div className="flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="p-2 rounded-full bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white shadow-md shadow-red-500/30 group-hover:scale-105 transition-transform duration-200">
-              <HotelIcon className="w-4 h-4" />
+          {/* Brand Logo with Generated Emblem */}
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-red-500 shadow-md shadow-red-500/20 group-hover:scale-105 transition-transform duration-200 bg-white">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/brand-logo.jpg"
+                alt="AuraHotels Logo"
+                className="w-full h-full object-cover scale-110"
+              />
             </div>
             <div className="flex items-center">
-              <span className="text-base sm:text-lg font-bold text-slate-950 tracking-tight font-heading group-hover:text-red-600 transition-colors">
-                Cobalt<span className="text-red-600">Hotels</span>
+              <span className="text-lg sm:text-xl font-extrabold text-slate-950 tracking-tight font-heading group-hover:text-red-600 transition-colors">
+                Aura<span className="text-red-600">Hotels</span>
               </span>
-              <span className="hidden sm:inline-block ml-2 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-red-50 border border-red-200 text-red-700 rounded-full">
+              <span className="hidden sm:inline-block ml-2 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider bg-red-600 text-white rounded-full shadow-xs">
                 Luxury
               </span>
             </div>
           </Link>
 
           {/* Navigation Links Capsule */}
-          <nav className="hidden md:flex items-center gap-1 bg-slate-100/90 p-1 rounded-full border border-slate-200/70 text-xs font-semibold">
+          <nav className="hidden md:flex items-center gap-1.5 bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-bold">
             <Link
               href="/"
               className={`px-4 py-1.5 rounded-full transition-all duration-200 ${
                 pathname === "/"
-                  ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/80"
-                  : "text-slate-600 hover:text-slate-950 hover:bg-white/60"
+                  ? "bg-white text-slate-950 font-extrabold shadow-sm border border-slate-300"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white/70"
               }`}
             >
-              Explore Stays
+              Explore Hotels
             </Link>
 
             <Link
               href="/register-hotel"
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full transition-all duration-200 ${
                 pathname === "/register-hotel"
-                  ? "bg-white text-slate-950 font-bold shadow-xs border border-slate-200/80"
-                  : "text-slate-600 hover:text-slate-950 hover:bg-white/60"
+                  ? "bg-white text-slate-950 font-extrabold shadow-sm border border-slate-300"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white/70"
               }`}
             >
-              <Sparkles className="w-3 h-3 text-red-500" />
-              <span>Register Hotel</span>
+              <Sparkles className="w-3.5 h-3.5 text-red-600" />
+              <span>List Property</span>
             </Link>
 
             {user?.role === "admin" && (
@@ -133,8 +137,8 @@ export function Navbar() {
                 href="/admin/dashboard"
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full transition-all duration-200 ${
                   pathname.startsWith("/admin")
-                    ? "bg-red-600 text-white font-bold shadow-xs"
-                    : "text-red-700 bg-red-50/80 hover:bg-red-100 font-bold"
+                    ? "bg-red-600 text-white font-extrabold shadow-xs"
+                    : "text-red-700 bg-red-50 hover:bg-red-100 font-extrabold"
                 }`}
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
@@ -147,8 +151,8 @@ export function Navbar() {
                 href="/owner/dashboard"
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full transition-all duration-200 ${
                   pathname.startsWith("/owner")
-                    ? "bg-red-600 text-white font-bold shadow-xs"
-                    : "text-red-700 bg-red-50/80 hover:bg-red-100 font-bold"
+                    ? "bg-red-600 text-white font-extrabold shadow-xs"
+                    : "text-red-700 bg-red-50 hover:bg-red-100 font-extrabold"
                 }`}
               >
                 <Building2 className="w-3.5 h-3.5" />
@@ -157,19 +161,19 @@ export function Navbar() {
             )}
           </nav>
 
-          {/* Right Actions: High-Visibility Buttons */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Notification Bell */}
+          {/* Right Action Buttons: High-Contrast "Sign In" & "Register Now" */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Notification Bell for Logged In User */}
             {user && (
               <div className="relative">
                 <button
                   onClick={() => setShowNotifMenu(!showNotifMenu)}
-                  className="relative p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-950 transition-colors shadow-2xs"
+                  className="relative p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 hover:text-slate-950 transition-colors shadow-xs"
                   title="Notifications"
                 >
-                  <Bell className="w-4 h-4" />
+                  <Bell className="w-4 h-4 text-slate-800" />
                   {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-600 text-white text-[9px] font-bold flex items-center justify-center animate-pulse shadow-sm">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-600 text-white text-[9px] font-extrabold flex items-center justify-center animate-pulse shadow-sm">
                       {unreadCount}
                     </span>
                   )}
@@ -215,14 +219,14 @@ export function Navbar() {
               </div>
             )}
 
-            {/* Logged In User Pill or High-Visibility CTAs */}
+            {/* If Logged In, Show User Badge; If Not, Show High-Contrast CTAs */}
             {user ? (
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <Link
                   href={user.role === "admin" ? "/admin/dashboard" : "/owner/dashboard"}
-                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors shadow-2xs"
+                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors shadow-xs"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-lava-primary to-lava-orange text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-red-600 to-orange-500 text-white flex items-center justify-center font-bold text-xs shadow-xs">
                     {user.name.charAt(0)}
                   </div>
                   <span className="hidden sm:inline-block text-xs font-bold text-slate-950">
@@ -231,7 +235,7 @@ export function Navbar() {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                  className="p-2 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                   title="Sign out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -239,20 +243,30 @@ export function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
+                {/* 1. SIGN IN BUTTON: Crisp Solid Dark Pill */}
                 <Link href="/login">
                   <button
-                    className="inline-flex items-center justify-center px-4 py-2 rounded-full text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition-all duration-200 active:scale-95"
+                    type="button"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-[#0B0F19] hover:bg-slate-800 text-white shadow-md transition-all duration-200 active:scale-95 cursor-pointer"
+                    style={{ backgroundColor: "#0B0F19", color: "#FFFFFF" }}
                   >
-                    <UserIcon className="w-3.5 h-3.5 mr-1.5 text-white" />
+                    <UserIcon className="w-3.5 h-3.5 text-white" />
                     <span>Sign In</span>
                   </button>
                 </Link>
+
+                {/* 2. REGISTER NOW BUTTON: Radiant Solid Lava Red Pill */}
                 <Link href="/register-hotel">
                   <button
-                    className="inline-flex items-center justify-center px-4.5 py-2 rounded-full text-xs font-bold bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white shadow-md shadow-red-500/30 hover:scale-105 transition-all duration-200 active:scale-95"
+                    type="button"
+                    className="inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-full text-xs font-extrabold text-white shadow-lg shadow-red-500/30 hover:opacity-95 hover:scale-105 transition-all duration-200 active:scale-95 cursor-pointer"
+                    style={{
+                      background: "linear-gradient(135deg, #FF3B30 0%, #FF9500 100%)",
+                      color: "#FFFFFF",
+                    }}
                   >
-                    <Sparkles className="w-3.5 h-3.5 mr-1.5 text-amber-200" />
-                    <span>Register Hotel</span>
+                    <Sparkles className="w-3.5 h-3.5 text-white" />
+                    <span>Register Now</span>
                   </button>
                 </Link>
               </div>
@@ -261,7 +275,7 @@ export function Navbar() {
             {/* Mobile Menu Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-full bg-slate-100 text-slate-800 hover:bg-slate-200"
+              className="md:hidden p-2 rounded-full bg-slate-100 text-slate-900 hover:bg-slate-200"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
@@ -274,22 +288,22 @@ export function Navbar() {
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-4 py-2.5 rounded-2xl text-xs font-bold text-slate-800 hover:bg-slate-100"
+              className="block px-4 py-2.5 rounded-2xl text-xs font-extrabold text-slate-900 hover:bg-slate-100"
             >
-              Explore Stays
+              Explore Hotels
             </Link>
             <Link
               href="/register-hotel"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-4 py-2.5 rounded-2xl text-xs font-bold text-red-600 bg-red-50/70"
+              className="block px-4 py-2.5 rounded-2xl text-xs font-extrabold text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-sm"
             >
-              Register Hotel (Option 2 Onboarding)
+              Register Now (Option 2 Onboarding)
             </Link>
             {!user && (
               <Link
                 href="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-2xl text-xs font-bold text-slate-900 bg-slate-100"
+                className="block px-4 py-2.5 rounded-2xl text-xs font-extrabold text-white bg-[#0B0F19]"
               >
                 Sign In to Portal
               </Link>
@@ -298,7 +312,7 @@ export function Navbar() {
               <Link
                 href="/admin/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-2xl text-xs font-bold text-red-600 bg-red-50"
+                className="block px-4 py-2.5 rounded-2xl text-xs font-extrabold text-red-600 bg-red-50"
               >
                 Admin Command Center
               </Link>
@@ -307,7 +321,7 @@ export function Navbar() {
               <Link
                 href="/owner/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-2xl text-xs font-bold text-red-600 bg-red-50"
+                className="block px-4 py-2.5 rounded-2xl text-xs font-extrabold text-red-600 bg-red-50"
               >
                 Hotel Owner Portal
               </Link>

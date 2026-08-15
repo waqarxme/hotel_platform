@@ -1,6 +1,7 @@
 export const siteConfig = {
-  name: "HotelPlatform",
-  description: "Enterprise Hotel Booking & Owner Workflow Platform",
+  name: "AuraHotels",
+  brandTitle: "Aura Luxury Hotels & Resorts",
+  description: "Next-Generation Global Luxury Hotel Booking & Property Workflow Platform",
   links: {
     dashboard: "/owner/dashboard",
     admin: "/admin/dashboard",

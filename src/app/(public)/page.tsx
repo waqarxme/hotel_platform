@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Hotel } from "@/types";
-import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import {
   Search,
@@ -92,7 +91,7 @@ export default function HomePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-85" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
             </span>
-            <span className="tracking-wide">Enterprise Hospitality Infrastructure & Verified Bookings</span>
+            <span className="tracking-wide">Aura Luxury Hospitality & Verified Global Stays</span>
           </div>
 
           {/* Bold Headline */}
@@ -111,7 +110,7 @@ export default function HomePage() {
           {/* Elevated Pure White Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
-            className="max-w-4xl mx-auto p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-black/40 flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
+            className="max-w-4xl mx-auto p-3.5 bg-white rounded-3xl border border-slate-200 shadow-2xl shadow-black/40 flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
           >
             <div className="flex-1 flex items-center gap-3 px-3 py-2 w-full border-b md:border-b-0 md:border-r border-slate-200">
               <MapPin className="w-5 h-5 text-red-600 shrink-0" />
@@ -135,15 +134,13 @@ export default function HomePage() {
               </div>
             </div>
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              size="lg"
-              className="w-full md:w-auto px-8 shrink-0 bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-bold shadow-xl shadow-red-500/30 text-sm"
+              className="w-full md:w-auto px-8 py-3.5 shrink-0 rounded-2xl bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-extrabold shadow-xl shadow-red-500/30 text-sm flex items-center justify-center gap-2 cursor-pointer transition active:scale-95"
             >
-              <Search className="w-4 h-4 mr-2" />
+              <Search className="w-4 h-4" />
               <span>Explore Stays</span>
-            </Button>
+            </button>
           </form>
 
           {/* Category Chips */}
@@ -152,7 +149,7 @@ export default function HomePage() {
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition duration-200 capitalize backdrop-blur-md ${
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition duration-200 capitalize backdrop-blur-md cursor-pointer ${
                   category === cat
                     ? "bg-gradient-to-r from-lava-primary to-lava-orange text-white shadow-lg shadow-red-500/40 scale-105 border border-red-400"
                     : "bg-white/90 border border-white/40 text-slate-800 hover:bg-white hover:text-slate-950"
@@ -213,16 +210,15 @@ export default function HomePage() {
             <Building2 className="w-12 h-12 text-slate-400 mx-auto" />
             <h3 className="text-xl font-bold text-slate-900 font-heading">No properties found</h3>
             <p className="text-xs text-slate-500">Try adjusting your destination keyword or filter category.</p>
-            <Button
-              variant="outline"
-              size="sm"
+            <button
               onClick={() => {
                 setSearch("");
                 setCategory("all");
               }}
+              className="px-4 py-2 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold"
             >
               Reset Filters
-            </Button>
+            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -297,14 +293,13 @@ export default function HomePage() {
                     </div>
 
                     <Link href={`/hotels/${hotel.id}`}>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="gap-2 bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-bold shadow-md shadow-red-500/20"
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-bold text-xs shadow-md shadow-red-500/20 active:scale-95 cursor-pointer"
                       >
                         <span>Book Room</span>
                         <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
+                      </button>
                     </Link>
                   </div>
                 </div>
@@ -375,25 +370,27 @@ export default function HomePage() {
               <span>Partner Onboarding Workflow</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold text-white font-heading leading-tight drop-shadow-sm">
-              Ready to List Your Property?
+              Ready to List Your Property on AuraHotels?
             </h2>
             <p className="text-red-50 text-xs sm:text-sm leading-relaxed font-medium">
-              Join the Cobalt hospitality ecosystem. Complete your registration in 3 simple steps, upload your license for instant verification, and unlock your dedicated property dashboard.
+              Join the Aura luxury hospitality ecosystem. Complete your registration in 3 simple steps, upload your license for instant verification, and unlock your dedicated property dashboard.
             </p>
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            <div className="pt-3 flex flex-wrap items-center gap-4">
               <Link href="/register-hotel">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="bg-white hover:bg-slate-100 text-red-600 font-bold shadow-xl shadow-black/20"
+                <button
+                  type="button"
+                  className="px-6 py-3 rounded-full text-xs font-extrabold bg-white hover:bg-slate-100 text-red-600 shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   Register Your Hotel (Option 2)
-                </Button>
+                </button>
               </Link>
               <Link href="/login">
-                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/15 font-bold">
+                <button
+                  type="button"
+                  className="px-6 py-3 rounded-full text-xs font-extrabold bg-[#0B0F19] hover:bg-slate-900 text-white border border-white/20 shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                >
                   Access Portal
-                </Button>
+                </button>
               </Link>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Hotel, Shield, Sparkles } from "lucide-react";
+import { Shield, Sparkles } from "lucide-react";
 
 export function Footer() {
   return (
@@ -8,16 +8,21 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-3 md:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-xl bg-gradient-to-r from-lava-primary to-lava-orange text-white shadow-sm shadow-red-500/25">
-                <Hotel className="w-4 h-4" />
+            <div className="flex items-center gap-3">
+              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-red-500 shadow-sm bg-white">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/brand-logo.jpg"
+                  alt="AuraHotels Logo"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="text-base font-bold text-slate-900 font-heading">
-                Cobalt<span className="text-red-600">Hotels</span>
+                Aura<span className="text-red-600">Hotels</span>
               </span>
             </div>
             <p className="text-slate-500 text-xs max-w-md leading-relaxed">
-              Enterprise Hotel Onboarding & Approval Platform. Streamlining verification, direct bookings, cleaning fleet operations, and hospitality revenue analytics.
+              Next-Generation Global Luxury Hotel Booking & Property Workflow Platform. Streamlining verification, direct bookings, cleaning fleet operations, and hospitality revenue analytics.
             </p>
             <div className="flex items-center gap-4 text-[11px] text-slate-500 pt-2">
               <span className="flex items-center gap-1">
@@ -87,7 +92,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-          <p>© 2026 Cobalt Hotels Platform. All rights reserved.</p>
+          <p>© 2026 AuraHotels Luxury Hospitality Platform. All rights reserved.</p>
           <p>Powered by Supabase RLS & Vercel Serverless Architecture</p>
         </div>
       </div>
