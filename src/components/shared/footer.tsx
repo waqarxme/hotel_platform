@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Shield, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export function Footer() {
   return (
@@ -24,12 +24,9 @@ export function Footer() {
             <p className="text-slate-500 text-xs max-w-md leading-relaxed">
               Next-Generation Global Luxury Hotel Booking & Property Workflow Platform. Streamlining verification, direct bookings, cleaning fleet operations, and hospitality revenue analytics.
             </p>
-            <div className="flex items-center gap-4 text-[11px] text-slate-500 pt-2">
+            <div className="flex items-center gap-3 text-[11px] text-slate-400 pt-2">
               <span className="flex items-center gap-1">
-                <Shield className="w-3.5 h-3.5 text-emerald-600" /> Supabase RLS Protected
-              </span>
-              <span className="flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-red-500" /> Vercel Serverless Ready
+                <Sparkles className="w-3.5 h-3.5 text-red-400" /> Luxury Hospitality Platform
               </span>
             </div>
           </div>
@@ -41,7 +38,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/register-hotel" className="hover:text-red-600 transition">
-                  List Your Property (Option 2)
+                  List Your Property
                 </Link>
               </li>
               <li>
@@ -74,17 +71,17 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/admin/hotels" className="hover:text-red-600 transition">
-                  Approval Queue (4 Queues)
+                  Approval Queue
                 </Link>
               </li>
               <li>
                 <Link href="/admin/hotels/create" className="hover:text-red-600 transition">
-                  Add Hotel Directly (Option 1)
+                  Add Hotel Directly
                 </Link>
               </li>
               <li>
                 <Link href="/admin/cleaning" className="hover:text-red-600 transition">
-                  Cleaning Team Dispatch
+                  Cleaning Dispatch
                 </Link>
               </li>
             </ul>
@@ -93,7 +90,7 @@ export function Footer() {
 
         <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <p>© 2026 AuraHotels Luxury Hospitality Platform. All rights reserved.</p>
-          <p>Powered by Supabase RLS & Vercel Serverless Architecture</p>
+          <p>Premium Hospitality Technology Platform</p>
         </div>
       </div>
     </footer>

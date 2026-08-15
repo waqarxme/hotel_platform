@@ -41,15 +41,15 @@ export function SplitAuthLayout({
         {/* Top Branding Badge */}
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-3 group">
-            <div className="p-2.5 rounded-2xl bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 text-white shadow-lg shadow-red-500/30 group-hover:scale-105 transition duration-200">
+            <div className="p-2.5 rounded-2xl bg-gradient-to-r from-red-600 via-orange-500 to-red-700 text-white shadow-lg shadow-red-500/30 group-hover:scale-105 transition duration-200">
               <HotelIcon className="w-5 h-5" />
             </div>
             <div>
               <span className="text-xl font-bold text-white tracking-tight font-heading group-hover:text-red-400 transition">
-                Cobalt<span className="text-red-500">Hotels</span>
+                Aura<span className="text-red-400">Hotels</span>
               </span>
               <p className="text-[10px] text-slate-300 font-mono tracking-wider uppercase">
-                Enterprise Hospitality
+                Luxury Hospitality
               </p>
             </div>
           </Link>
@@ -78,7 +78,7 @@ export function SplitAuthLayout({
 
           <div className="pt-4 border-t border-white/20 flex items-center gap-6 text-xs text-slate-300">
             <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Supabase RLS Protected
+              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Verified Properties Only
             </span>
             <span className="flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-red-400" /> Free Cleaning Program

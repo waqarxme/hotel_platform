@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Hotel } from "@/types";
 import { formatCurrency } from "@/lib/utils";
@@ -14,15 +14,27 @@ import {
   Calendar,
   Award,
   TrendingUp,
+  SlidersHorizontal,
+  X,
 } from "lucide-react";
+
+type SortOption = "price_asc" | "price_desc" | "name_asc" | "verified";
+
+const SORT_LABELS: Record<SortOption, string> = {
+  price_asc: "Price: Low to High",
+  price_desc: "Price: High to Low",
+  name_asc: "Name A–Z",
+  verified: "Verified First",
+};
 
 export default function HomePage() {
   const [hotels, setHotels] = useState<(Hotel & { startingPrice: number; roomsCount: number })[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
+  const [sort, setSort] = useState<SortOption>("verified");
+  const [showSortMenu, setShowSortMenu] = useState(false);
 
-  // Interactive Cleaning Milestone Calculator State
   const [monthlyBookings, setMonthlyBookings] = useState(25);
 
   const categories = [
@@ -35,36 +47,60 @@ export default function HomePage() {
     "Apartment",
   ];
 
-  const fetchHotels = async () => {
+  const sortHotels = useCallback(
+    (list: (Hotel & { startingPrice: number; roomsCount: number })[], s: SortOption) => {
+      const copy = [...list];
+      if (s === "price_asc") return copy.sort((a, b) => a.startingPrice - b.startingPrice);
+      if (s === "price_desc") return copy.sort((a, b) => b.startingPrice - a.startingPrice);
+      if (s === "name_asc") return copy.sort((a, b) => a.name.localeCompare(b.name));
+      if (s === "verified") return copy.sort((a, b) => (b.isVerified ? 1 : 0) - (a.isVerified ? 1 : 0));
+      return copy;
+    },
+    []
+  );
+
+  const fetchHotels = useCallback(async (searchVal: string, cat: string, sortVal: SortOption) => {
     setIsLoading(true);
     try {
       const query = new URLSearchParams();
-      if (search) query.append("search", search);
-      if (category !== "all") query.append("category", category);
+      if (searchVal) query.append("search", searchVal);
+      if (cat !== "all") query.append("category", cat);
 
       const res = await fetch(`/api/hotels/public?${query.toString()}`);
       if (res.ok) {
         const data = await res.json();
-        setHotels(data.hotels || []);
+        setHotels(sortHotels(data.hotels || [], sortVal));
       }
     } catch (e) {
       console.error("Failed to load hotels", e);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [sortHotels]);
 
   useEffect(() => {
-    fetchHotels();
+    fetchHotels(search, category, sort);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchHotels();
+    fetchHotels(search, category, sort);
+  };
+
+  const handleSortChange = (s: SortOption) => {
+    setSort(s);
+    setShowSortMenu(false);
+    setHotels((prev) => sortHotels(prev, s));
+  };
+
+  const handleClearSearch = () => {
+    setSearch("");
+    fetchHotels("", category, sort);
   };
 
   const freeCleaningsEarned = Math.floor(monthlyBookings / 5);
-  const estimatedSavings = freeCleaningsEarned * 120; // $120 per deep cleaning
+  const estimatedSavings = freeCleaningsEarned * 120;
 
   return (
     <div className="bg-white min-h-screen space-y-24 pb-24 text-slate-900">
@@ -91,12 +127,12 @@ export default function HomePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-85" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
             </span>
-            <span className="tracking-wide">Aura Luxury Hospitality & Verified Global Stays</span>
+            <span className="tracking-wide">Aura Luxury Hospitality &amp; Verified Global Stays</span>
           </div>
 
           {/* Bold Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white font-heading leading-[1.08] drop-shadow-2xl">
-            Experience Verified Stays & <br className="hidden sm:inline" />
+            Experience Verified Stays &amp; <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">
               Automated Property Operations
             </span>
@@ -107,26 +143,37 @@ export default function HomePage() {
             Direct reservation control for premium travelers. Automated administrative onboarding, instant room availability management, and complimentary cleaning fleet dispatch for hotel partners.
           </p>
 
-          {/* Elevated Pure White Search Bar */}
+          {/* Elevated Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
             className="max-w-4xl mx-auto p-3.5 bg-white rounded-3xl border border-slate-200 shadow-2xl shadow-black/40 flex flex-col md:flex-row items-center gap-3 backdrop-blur-xl"
           >
-            <div className="flex-1 flex items-center gap-3 px-3 py-2 w-full border-b md:border-b-0 md:border-r border-slate-200">
+            <div className="flex-1 flex items-center gap-3 px-3 py-2 w-full border-b md:border-b-0 md:border-r border-slate-200 min-w-0">
               <MapPin className="w-5 h-5 text-red-600 shrink-0" />
-              <div className="text-left w-full">
+              <div className="text-left w-full min-w-0">
                 <span className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider">Destination</span>
-                <input
-                  type="text"
-                  placeholder="Where are you going? (e.g. Islamabad, Lahore, Naran)"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-transparent text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none font-bold mt-0.5"
-                />
+                <div className="flex items-center gap-2 mt-0.5">
+                  <input
+                    type="text"
+                    placeholder="Where are you going? (e.g. Islamabad, Lahore, Naran)"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full bg-transparent text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none font-bold"
+                  />
+                  {search && (
+                    <button
+                      type="button"
+                      onClick={handleClearSearch}
+                      className="shrink-0 p-0.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-3 py-2 w-full md:w-56 border-b md:border-b-0 md:border-r border-slate-200">
+            <div className="flex items-center gap-3 px-3 py-2 w-full md:w-56 border-b md:border-b-0 md:border-r border-slate-200 shrink-0">
               <Calendar className="w-5 h-5 text-orange-500 shrink-0" />
               <div className="text-left">
                 <span className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider">Dates</span>
@@ -136,7 +183,8 @@ export default function HomePage() {
 
             <button
               type="submit"
-              className="w-full md:w-auto px-8 py-3.5 shrink-0 rounded-2xl bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-extrabold shadow-xl shadow-red-500/30 text-sm flex items-center justify-center gap-2 cursor-pointer transition active:scale-95"
+              style={{ background: "linear-gradient(135deg, #FF3B30, #FF9500)" }}
+              className="w-full md:w-auto px-8 py-3.5 shrink-0 rounded-2xl text-white font-extrabold shadow-xl text-sm flex items-center justify-center gap-2 cursor-pointer transition active:scale-95 hover:opacity-90"
             >
               <Search className="w-4 h-4" />
               <span>Explore Stays</span>
@@ -149,18 +197,23 @@ export default function HomePage() {
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition duration-200 capitalize backdrop-blur-md cursor-pointer ${
+                style={
                   category === cat
-                    ? "bg-gradient-to-r from-lava-primary to-lava-orange text-white shadow-lg shadow-red-500/40 scale-105 border border-red-400"
-                    : "bg-white/90 border border-white/40 text-slate-800 hover:bg-white hover:text-slate-950"
+                    ? { background: "linear-gradient(135deg, #FF3B30, #FF9500)", color: "#fff", borderColor: "#FF3B30" }
+                    : {}
+                }
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition duration-200 capitalize backdrop-blur-md cursor-pointer border ${
+                  category === cat
+                    ? "shadow-lg scale-105"
+                    : "bg-white/90 border-white/40 text-slate-800 hover:bg-white hover:text-slate-950"
                 }`}
               >
-                {cat}
+                {cat === "all" ? "All" : cat}
               </button>
             ))}
           </div>
 
-          {/* 4 Clean Frosted White Stats Tickers */}
+          {/* Stats */}
           <div className="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-white/20 text-center">
             <div className="p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-md space-y-0.5">
               <p className="text-2xl sm:text-3xl font-bold text-slate-950 font-heading">100%</p>
@@ -191,11 +244,42 @@ export default function HomePage() {
               <span>Curated Partner Portfolio</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 font-heading">
-              Featured Verified Stays ({hotels.length})
+              Featured Verified Stays
+              <span className="ml-2 text-xl text-slate-400 font-normal">({hotels.length})</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
               Properties officially inspected and ready for instant reservation confirmations.
             </p>
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="relative shrink-0">
+            <button
+              type="button"
+              onClick={() => setShowSortMenu((p) => !p)}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs font-bold hover:border-red-400 hover:text-red-600 transition shadow-sm"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              <span>Sort: {SORT_LABELS[sort]}</span>
+            </button>
+            {showSortMenu && (
+              <div className="absolute right-0 top-12 z-50 w-52 rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden">
+                {(Object.keys(SORT_LABELS) as SortOption[]).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => handleSortChange(s)}
+                    className={`w-full text-left px-4 py-3 text-xs font-bold transition ${
+                      sort === s
+                        ? "bg-red-50 text-red-600"
+                        : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
+                  >
+                    {SORT_LABELS[s]}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -214,6 +298,7 @@ export default function HomePage() {
               onClick={() => {
                 setSearch("");
                 setCategory("all");
+                fetchHotels("", "all", sort);
               }}
               className="px-4 py-2 rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold"
             >
@@ -246,7 +331,7 @@ export default function HomePage() {
                     </span>
                     {hotel.isVerified && (
                       <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-md">
-                        <ShieldCheck className="w-3 h-3" /> Verified Partner
+                        <ShieldCheck className="w-3 h-3" /> Verified
                       </span>
                     )}
                   </div>
@@ -295,7 +380,8 @@ export default function HomePage() {
                     <Link href={`/hotels/${hotel.id}`}>
                       <button
                         type="button"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-lava-primary via-lava-orange to-red-600 hover:opacity-95 text-white font-bold text-xs shadow-md shadow-red-500/20 active:scale-95 cursor-pointer"
+                        style={{ background: "linear-gradient(135deg, #FF3B30, #FF9500)" }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-bold text-xs shadow-md shadow-red-500/20 active:scale-95 cursor-pointer hover:opacity-90 transition"
                       >
                         <span>Book Room</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -361,7 +447,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. PARTNER ONBOARDING CTA BANNER (Vibrant Lava-Orange Card) */}
+      {/* 4. PARTNER ONBOARDING CTA BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-red-600 via-orange-600 to-red-700 text-white relative overflow-hidden shadow-2xl shadow-red-600/25">
           <div className="max-w-2xl space-y-5 relative z-10">
@@ -381,7 +467,7 @@ export default function HomePage() {
                   type="button"
                   className="px-6 py-3 rounded-full text-xs font-extrabold bg-white hover:bg-slate-100 text-red-600 shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  Register Your Hotel (Option 2)
+                  Register Your Hotel
                 </button>
               </Link>
               <Link href="/login">
