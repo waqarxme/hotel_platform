@@ -32,9 +32,11 @@ export function Navbar() {
       const res = await fetch("/api/auth/me");
       if (res.ok) {
         const data = await res.json();
-        setUser(data.user);
-        setHotel(data.hotel);
-        fetchNotifications();
+        setUser(data.user || null);
+        setHotel(data.hotel || null);
+        if (data.user) {
+          fetchNotifications();
+        }
       } else {
         setUser(null);
         setHotel(null);

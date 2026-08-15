@@ -7,7 +7,11 @@ export async function GET() {
   try {
     const user = await getCurrentUser();
     if (!user) {
-      return errorResponse("UNAUTHORIZED", "Not authenticated", 401);
+      return successResponse({
+        user: null,
+        hotel: null,
+        notifications: [],
+      });
     }
 
     let hotel = null;
