@@ -46,17 +46,17 @@ export function AdminSidebar() {
   };
 
   return (
-    <aside className="w-64 shrink-0 bg-lava-950 border-r border-lava-800/80 min-h-[calc(100vh-4rem)] flex flex-col justify-between p-4">
+    <aside className="w-64 shrink-0 bg-white border-r border-slate-200 min-h-[calc(100vh-4rem)] flex flex-col justify-between p-4 shadow-sm">
       <div className="space-y-6">
         {/* Admin Badge */}
-        <div className="p-3.5 rounded-2xl bg-lava-900 border border-lava-800 space-y-1">
+        <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-lava-500 animate-lava-pulse" />
-            <span className="text-[10px] uppercase font-bold tracking-wider text-lava-400">
+            <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+            <span className="text-[10px] uppercase font-bold tracking-wider text-red-600">
               Master Admin Console
             </span>
           </div>
-          <p className="text-xs font-bold text-white font-heading">Cobalt Control Plane</p>
+          <p className="text-xs font-bold text-slate-900 font-heading">Cobalt Control Plane</p>
         </div>
 
         {/* Navigation */}
@@ -70,16 +70,16 @@ export function AdminSidebar() {
                 className={cn(
                   "flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition duration-150",
                   isActive
-                    ? "bg-lava-500 text-white shadow-md shadow-lava-500/25 font-bold"
-                    : "text-titanium-300 hover:text-white hover:bg-lava-900"
+                    ? "bg-gradient-to-r from-lava-primary to-lava-orange text-white shadow-md shadow-red-500/25 font-bold"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 )}
               >
                 <div className="flex items-center gap-2.5">
-                  <item.icon className={cn("w-4 h-4", isActive ? "text-white" : "text-titanium-400")} />
+                  <item.icon className={cn("w-4 h-4", isActive ? "text-white" : "text-slate-400")} />
                   <span>{item.name}</span>
                 </div>
                 {item.count !== undefined && item.count > 0 && (
-                  <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-signal-amber text-lava-950 animate-pulse">
+                  <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white animate-pulse">
                     {item.count}
                   </span>
                 )}
@@ -90,17 +90,17 @@ export function AdminSidebar() {
       </div>
 
       {/* Footer Navigation */}
-      <div className="pt-4 border-t border-lava-800 space-y-2">
+      <div className="pt-4 border-t border-slate-100 space-y-1">
         <Link
           href="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-titanium-400 hover:text-white hover:bg-lava-900 transition"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Public Portal</span>
         </Link>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition"
         >
           <LogOut className="w-4 h-4" />
           <span>Sign Out</span>

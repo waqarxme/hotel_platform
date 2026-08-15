@@ -5,90 +5,88 @@
 @tailwind utilities;
 
 :root {
-  --lava-950: #08080C;
-  --lava-900: #0F0F17;
-  --lava-850: #141420;
-  --lava-800: #1B1B2A;
-  --lava-700: #28283E;
-  --lava-500: #FF3B30;
-  --lava-400: #FF5A4F;
-  --signal-emerald: #1FAE7A;
+  --bg-main: #FFFFFF;
+  --bg-subtle: #F8FAFC;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border-light: #E2E8F0;
+  
+  --lava-primary: #FF3B30;
+  --lava-orange: #FF9500;
+  --lava-dark: #0B0F19;
+  
+  --signal-emerald: #10B981;
   --signal-amber: #F59E0B;
-  --signal-crimson: #FF3B30;
-  --signal-violet: #9A6BFF;
-  --white: #FFFFFF;
-  --titanium-200: #F4F5F8;
-  --titanium-400: #9AA2B5;
+  --signal-crimson: #EF4444;
+  --signal-violet: #8B5CF6;
 }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #08080C;
-  color: #F4F5F8;
+  background-color: #FFFFFF;
+  color: #0F172A;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: 'Space Grotesk', sans-serif;
-  color: #FFFFFF;
+  color: #0F172A;
 }
 
 code, kbd, samp, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom Volcanic Scrollbar */
+/* Light Scrollbar with Lava Red Accent */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #08080C;
+  background: #F8FAFC;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1B1B2A;
+  background: #CBD5E1;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #FF3B30;
 }
 
-/* Glassmorphism with Lava borders */
+/* White Glassmorphism with Lava & Orange Highlights */
 .glass-panel {
-  background: rgba(15, 15, 23, 0.82);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 59, 48, 0.15);
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
 }
 
 .glass-card {
-  background: rgba(20, 20, 32, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s ease-in-out;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 59, 48, 0.4);
+  border-color: #FF3B30;
+  box-shadow: 0 12px 30px -5px rgba(255, 59, 48, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  transform: translateY(-2px);
 }
 
-/* Lava Glow and Pulses */
-@keyframes lavaGlowPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.15);
-  }
+/* Gradient text utility */
+.text-lava-gradient {
+  background: linear-gradient(135deg, #FF3B30 0%, #FF9500 50%, #0B0F19 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.animate-lava-pulse {
-  animation: lavaGlowPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.bg-lava-gradient {
+  background: linear-gradient(135deg, #FF3B30 0%, #FF9500 100%);
 }
 
-.glow-lava {
-  box-shadow: 0 0 25px -5px rgba(255, 59, 48, 0.45);
+.bg-lava-dark-gradient {
+  background: linear-gradient(135deg, #0B0F19 0%, #1E293B 100%);
 }
