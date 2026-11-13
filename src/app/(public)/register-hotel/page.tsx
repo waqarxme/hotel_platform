@@ -101,6 +101,13 @@ export default function RegisterHotelPage() {
 
       const data = await res.json();
       if (res.ok) {
+        if (data.needsEmailConfirmation) {
+          setErrorMessage(
+            data.message || "Check your email to confirm your account before signing in."
+          );
+          setIsSubmitting(false);
+          return;
+        }
         router.push("/owner/dashboard");
       } else {
         setErrorMessage(data.error?.message || "Failed to submit registration request.");

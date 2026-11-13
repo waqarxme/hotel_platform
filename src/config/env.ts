@@ -5,7 +5,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url(),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(10),
-  JWT_SECRET: z.string().min(16),
+  JWT_SECRET: z.string().min(16).optional(),
   DATABASE_URL: z.string().optional(),
 });
 

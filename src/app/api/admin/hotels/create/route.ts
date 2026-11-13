@@ -2,8 +2,8 @@ import { NextRequest } from "next/server";
 import { db } from "@/lib/db/store";
 import { verifyAuth, errorResponse, successResponse, guardSecurity } from "@/lib/auth/rbac";
 import { adminCreateHotelSchema } from "@/lib/schemas/hotel";
-import { hashPassword } from "@/lib/auth/password";
-import { toPublicUser } from "@/lib/auth/session";
+import { getOrCreateAppUser, toPublicUser } from "@/lib/auth/session";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   const secError = guardSecurity(req, "admin-hotels-write");
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     const data = result.data;
 
-    // Find or create owner
+    // Find or provision the owner in Supabase Auth + the app store
     let owner = db.findUserByEmail(data.ownerEmail);
     if (!owner) {
       if (!data.ownerPassword) {
@@ -33,13 +33,28 @@ export async function POST(req: NextRequest) {
           { ownerPassword: ["Password required for new owner accounts"] }
         );
       }
-      owner = db.createUser({
-        name: data.ownerName,
+
+      const supabase = getSupabaseServerClient();
+      const { data: authData, error } = await supabase.auth.signUp({
         email: data.ownerEmail,
-        phone: data.phone,
-        role: "hotel_owner",
-        passwordHash: hashPassword(data.ownerPassword),
+        password: data.ownerPassword,
+        options: {
+          data: { name: data.ownerName, phone: data.phone, role: "hotel_owner" },
+        },
       });
+
+      if (error && !error.message.toLowerCase().includes("already registered")) {
+        return errorResponse("INTERNAL_SERVER_ERROR", "Failed to create the owner account", 500);
+      }
+
+      owner = authData.user
+        ? getOrCreateAppUser(authData.user)
+        : db.createUser({
+            name: data.ownerName,
+            email: data.ownerEmail,
+            phone: data.phone,
+            role: "hotel_owner",
+          });
     }
 
     // Create hotel directly

@@ -66,6 +66,11 @@ export const db = {
     return state.users.find((u) => u.id === id);
   },
 
+  findUserByAuthId(authId: string): User | undefined {
+    const state = getDatabase();
+    return state.users.find((u) => u.authId === authId);
+  },
+
   createUser(user: Omit<User, "id" | "createdAt">): User {
     const state = getDatabase();
     const clean = sanitizeRecord(user);
